@@ -1,6 +1,7 @@
-import { getBanners, getFeaturedProducts, formatRupiah } from "@/lib/catalog";
+import { getBanners, getFeaturedProducts } from "@/lib/catalog";
 import { PapapowLogo } from "@/components/papapow-logo";
 import { SiteHeader } from "@/components/site-header";
+import { CatalogGrid } from "@/components/catalog-grid";
 
 export const dynamic = "force-dynamic";
 
@@ -24,33 +25,7 @@ export default async function Home() {
 
       <section className="catalog-section" id="catalog">
         <h2>ALL COLLECTION</h2>
-        <div className="product-grid">
-          {products.map((product) => (
-            <article className="product-card" key={product.id}>
-              {product.discount_label ? (
-                <span className="discount-badge">{product.discount_label}</span>
-              ) : null}
-              <a className="product-image" href={`/products/${product.id}`}>
-                <img src={product.image_url} alt={product.name} />
-              </a>
-              <a className="card-link" href={`/products/${product.id}`}>
-                <p className="product-category">{product.category}</p>
-                <h3>{product.name}</h3>
-              </a>
-              <div className="price-row">
-                {product.compare_at_price ? (
-                  <span className="compare-price">
-                    {formatRupiah(product.compare_at_price)}
-                  </span>
-                ) : null}
-                <strong>{formatRupiah(product.price)}</strong>
-              </div>
-              <a className="buy-button" href={`/products/${product.id}`}>
-                Beli
-              </a>
-            </article>
-          ))}
-        </div>
+        <CatalogGrid products={products} />
         <a className="primary-cta" href="#catalog">
           SEE ALL PRODUCT
         </a>

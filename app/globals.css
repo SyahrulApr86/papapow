@@ -1485,3 +1485,182 @@ textarea {
     gap: 18px;
   }
 }
+
+/* ── Add to Cart Modal ─────────────────────────────── */
+.atc-backdrop {
+  background: rgba(0, 0, 0, 0.45);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.atc-sheet {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 0 0 32px;
+  width: 100%;
+  max-width: 520px;
+  animation: atc-slide-up 0.25s ease;
+}
+
+@keyframes atc-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.atc-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 16px;
+}
+
+.atc-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.atc-close {
+  color: var(--ink);
+}
+
+.atc-product-row {
+  align-items: center;
+  background: var(--soft);
+  border-radius: 12px;
+  display: flex;
+  gap: 12px;
+  margin: 0 16px 20px;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.atc-product-img {
+  border-radius: 8px;
+  flex-shrink: 0;
+  height: 60px;
+  overflow: hidden;
+  width: 60px;
+}
+
+.atc-product-img img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.atc-product-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.atc-product-arrow {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.atc-section {
+  padding: 0 16px 16px;
+}
+
+.atc-section-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.atc-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.atc-size-btn {
+  background: none;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  height: 40px;
+  min-width: 52px;
+  padding: 0 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.atc-size-btn.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.atc-divider {
+  border-top: 1px solid var(--line);
+  margin: 4px 16px 16px;
+}
+
+.atc-qty-row {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.atc-qty-btn {
+  align-items: center;
+  background: var(--soft);
+  border: none;
+  border-radius: 50%;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  transition: background 0.15s;
+  width: 36px;
+}
+
+.atc-qty-btn:hover {
+  background: var(--line);
+}
+
+.atc-qty-val {
+  font-size: 18px;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: center;
+}
+
+.atc-submit {
+  background: var(--ink);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  height: 52px;
+  letter-spacing: 0.02em;
+  margin: 0 16px;
+  transition: opacity 0.15s;
+  width: calc(100% - 32px);
+}
+
+.atc-submit:hover {
+  opacity: 0.85;
+}
