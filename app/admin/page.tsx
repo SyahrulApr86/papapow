@@ -171,7 +171,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               <Field label="Diskon" name="discount_label" defaultValue={product.discount_label} />
               <Field label="Gambar URL" name="image_url" defaultValue={product.image_url} required />
               <Field label="Gambar Tambahan (JSON)" name="images" defaultValue={JSON.stringify(product.images)} />
-              <Field label="Ukuran (JSON array)" name="sizes" defaultValue={JSON.stringify(product.sizes)} />
+              <Field label="Ukuran (pisah koma)" name="sizes" defaultValue={product.sizes?.join(", ")} />
               <Field label="Deskripsi" name="description" type="textarea" defaultValue={product.description} />
               <Field label="Material" name="material" type="textarea" defaultValue={product.material} />
               <Field label="Berat (gram)" name="weight" type="number" defaultValue={product.weight} />
