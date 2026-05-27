@@ -1,25 +1,48 @@
 import { db, type Banner, type Product } from "@/lib/db";
 
+const productColumns = `id, name, category, price, compare_at_price,
+  discount_label, image_url, images, sizes, description, material, weight,
+  is_featured, sort_order`;
+
+function parseProduct(row: any): Product {
+  return {
+    ...row,
+    images: typeof row.images === "string" ? JSON.parse(row.images) : row.images ?? [],
+    sizes: typeof row.sizes === "string" ? JSON.parse(row.sizes) : row.sizes ?? [],
+  };
+}
+
 export async function getProducts() {
   const { rows } = await db.query<Product>(
-    `SELECT id, name, category, price, compare_at_price, discount_label, image_url, is_featured, sort_order
+    `SELECT ${productColumns}
      FROM products
      ORDER BY sort_order ASC, id ASC`,
   );
 
-  return rows;
+  return rows.map(parseProduct);
 }
 
 export async function getFeaturedProducts() {
   const { rows } = await db.query<Product>(
-    `SELECT id, name, category, price, compare_at_price, discount_label, image_url, is_featured, sort_order
+    `SELECT ${productColumns}
      FROM products
      WHERE is_featured = true
      ORDER BY sort_order ASC, id ASC
      LIMIT 8`,
   );
 
-  return rows;
+  return rows.map(parseProduct);
+}
+
+export async function getProductById(id: number) {
+  const { rows } = await db.query<Product>(
+    `SELECT ${productColumns}
+     FROM products
+     WHERE id = $1`,
+    [id],
+  );
+
+  return rows.length ? parseProduct(rows[0]) : null;
 }
 
 export async function getBanners() {

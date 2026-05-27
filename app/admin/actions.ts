@@ -46,13 +46,24 @@ export async function logoutAction() {
   redirect("/admin");
 }
 
+function jsonArray(formData: FormData, key: string) {
+  const raw = text(formData, key);
+  if (!raw) return "[]";
+  try {
+    JSON.parse(raw);
+    return raw;
+  } catch {
+    return JSON.stringify(raw.split(",").map((s) => s.trim()).filter(Boolean));
+  }
+}
+
 export async function createProduct(formData: FormData) {
   await requireAdmin();
 
   await db.query(
     `INSERT INTO products
-      (name, category, price, compare_at_price, discount_label, image_url, is_featured, sort_order)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      (name, category, price, compare_at_price, discount_label, image_url, images, sizes, description, material, weight, is_featured, sort_order)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
     [
       text(formData, "name"),
       text(formData, "category"),
@@ -60,6 +71,11 @@ export async function createProduct(formData: FormData) {
       nullableInt(formData, "compare_at_price"),
       nullableText(formData, "discount_label"),
       text(formData, "image_url"),
+      jsonArray(formData, "images"),
+      jsonArray(formData, "sizes"),
+      text(formData, "description"),
+      text(formData, "material"),
+      intValue(formData, "weight"),
       formData.get("is_featured") === "on",
       intValue(formData, "sort_order"),
     ],
@@ -80,9 +96,14 @@ export async function updateProduct(formData: FormData) {
          compare_at_price = $4,
          discount_label = $5,
          image_url = $6,
-         is_featured = $7,
-         sort_order = $8
-     WHERE id = $9`,
+         images = $7,
+         sizes = $8,
+         description = $9,
+         material = $10,
+         weight = $11,
+         is_featured = $12,
+         sort_order = $13
+     WHERE id = $14`,
     [
       text(formData, "name"),
       text(formData, "category"),
@@ -90,6 +111,11 @@ export async function updateProduct(formData: FormData) {
       nullableInt(formData, "compare_at_price"),
       nullableText(formData, "discount_label"),
       text(formData, "image_url"),
+      jsonArray(formData, "images"),
+      jsonArray(formData, "sizes"),
+      text(formData, "description"),
+      text(formData, "material"),
+      intValue(formData, "weight"),
       formData.get("is_featured") === "on",
       intValue(formData, "sort_order"),
       intValue(formData, "id"),

@@ -6,6 +6,11 @@ CREATE TABLE IF NOT EXISTS products (
   compare_at_price INTEGER,
   discount_label TEXT,
   image_url TEXT NOT NULL,
+  images JSONB DEFAULT '[]',
+  sizes JSONB DEFAULT '["S","M","L","XL","XXL"]',
+  description TEXT DEFAULT '',
+  material TEXT DEFAULT '',
+  weight INTEGER DEFAULT 0,
   is_featured BOOLEAN NOT NULL DEFAULT true,
   sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()

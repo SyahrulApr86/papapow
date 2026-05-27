@@ -26,6 +26,11 @@ export type Product = {
   compare_at_price: number | null;
   discount_label: string | null;
   image_url: string;
+  images: string[];
+  sizes: string[];
+  description: string;
+  material: string;
+  weight: number;
   is_featured: boolean;
   sort_order: number;
 };

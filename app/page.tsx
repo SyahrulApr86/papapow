@@ -37,19 +37,17 @@ export default async function Home() {
         <h2>ALL COLLECTION</h2>
         <div className="product-grid">
           {products.map((product) => (
-            <a
-              className="product-card"
-              key={product.id}
-              href={`/products/${product.id}`}
-            >
+            <article className="product-card" key={product.id}>
               {product.discount_label ? (
                 <span className="discount-badge">{product.discount_label}</span>
               ) : null}
-              <div className="product-image">
+              <a className="product-image" href={`/products/${product.id}`}>
                 <img src={product.image_url} alt={product.name} />
-              </div>
-              <p className="product-category">{product.category}</p>
-              <h3>{product.name}</h3>
+              </a>
+              <a href={`/products/${product.id}`}>
+                <p className="product-category">{product.category}</p>
+                <h3>{product.name}</h3>
+              </a>
               <div className="price-row">
                 {product.compare_at_price ? (
                   <span className="compare-price">
@@ -58,7 +56,10 @@ export default async function Home() {
                 ) : null}
                 <strong>{formatRupiah(product.price)}</strong>
               </div>
-            </a>
+              <a className="buy-button" href={`/products/${product.id}`}>
+                Beli
+              </a>
+            </article>
           ))}
         </div>
         <a className="primary-cta" href="#catalog">
