@@ -115,7 +115,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
       <section className="admin-section">
         <h2>Tambah Produk</h2>
-        <form className="admin-form product-form" action={createProduct} encType="multipart/form-data">
+        <form className="admin-form product-form" action={createProduct}>
           <Field label="Nama" name="name" required />
           <Field label="Kategori" name="category" required />
           <Field label="Harga" name="price" type="number" required />
@@ -175,7 +175,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <h2>Produk</h2>
         <div className="admin-list">
           {products.map((product) => (
-            <form className="admin-form product-form" action={updateProduct} key={product.id} encType="multipart/form-data">
+            <form className="admin-form product-form" action={updateProduct} key={product.id}>
               <input name="id" type="hidden" value={product.id} />
               <img className="admin-thumb" src={product.image_url} alt="" />
               <Field label="Nama" name="name" defaultValue={product.name} required />

@@ -1,0 +1,555 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]:
+            - generic [ref=e14]: PAPAPOW
+        - heading "Catalog Admin" [level=1] [ref=e15]
+      - button "Keluar" [ref=e17] [cursor=pointer]
+    - generic [ref=e18]:
+      - heading "Tambah Produk" [level=2] [ref=e19]
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - generic [ref=e22]: Nama
+          - textbox "Nama" [ref=e23]
+        - generic [ref=e24]:
+          - generic [ref=e25]: Kategori
+          - textbox "Kategori" [ref=e26]
+        - generic [ref=e27]:
+          - generic [ref=e28]: Harga
+          - spinbutton "Harga" [ref=e29]
+        - generic [ref=e30]:
+          - generic [ref=e31]: Harga Coret
+          - spinbutton "Harga Coret" [ref=e32]
+        - generic [ref=e33]:
+          - generic [ref=e34]: Diskon
+          - textbox "Diskon" [ref=e35]
+        - generic [ref=e36]:
+          - generic [ref=e37]: Upload Gambar Utama
+          - button "Upload Gambar Utama" [ref=e38]
+        - generic [ref=e39]:
+          - generic [ref=e40]: — atau URL Gambar
+          - textbox "— atau URL Gambar" [ref=e41]
+        - generic [ref=e42]:
+          - generic [ref=e43]: Upload Gambar Tambahan
+          - button "Upload Gambar Tambahan" [ref=e44]
+        - generic [ref=e45]:
+          - generic [ref=e46]: — atau URL Gambar Tambahan (JSON)
+          - textbox "— atau URL Gambar Tambahan (JSON)" [ref=e47]
+        - generic [ref=e49]:
+          - button "XS" [ref=e50] [cursor=pointer]
+          - button "S" [ref=e51] [cursor=pointer]
+          - button "M" [ref=e52] [cursor=pointer]
+          - button "L" [ref=e53] [cursor=pointer]
+          - button "XL" [ref=e54] [cursor=pointer]
+          - button "XXL" [ref=e55] [cursor=pointer]
+          - button "XXXL" [ref=e56] [cursor=pointer]
+          - button "FREE SIZE" [ref=e57] [cursor=pointer]
+        - generic [ref=e58]:
+          - generic [ref=e59]: Deskripsi
+          - textbox "Deskripsi" [ref=e60]
+        - generic [ref=e61]:
+          - generic [ref=e62]: Material
+          - textbox "Material" [ref=e63]
+        - generic [ref=e64]:
+          - generic [ref=e65]: Berat (gram)
+          - spinbutton "Berat (gram)" [ref=e66]
+        - generic [ref=e67]:
+          - generic [ref=e68]: Urutan
+          - spinbutton "Urutan" [ref=e69]: "0"
+        - generic [ref=e70]:
+          - checkbox "Tampil di homepage" [checked] [ref=e71]
+          - generic [ref=e72]: Tampil di homepage
+        - button "Simpan Produk" [ref=e73] [cursor=pointer]
+    - generic [ref=e74]:
+      - heading "Banner" [level=2] [ref=e75]
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: hero
+          - generic [ref=e79]:
+            - generic [ref=e80]: Judul
+            - textbox "Judul" [ref=e81]: PAPAPOW
+          - generic [ref=e82]:
+            - generic [ref=e83]: Subtitle
+            - textbox "Subtitle" [ref=e84]: Monochrome goods for daily motion.
+          - generic [ref=e85]:
+            - generic [ref=e86]: Gambar URL
+            - textbox "Gambar URL" [ref=e87]: https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1800&q=90
+          - generic [ref=e88]:
+            - generic [ref=e89]: CTA Label
+            - textbox "CTA Label" [ref=e90]
+          - generic [ref=e91]:
+            - generic [ref=e92]: CTA Link
+            - textbox "CTA Link" [ref=e93]
+          - generic [ref=e94]:
+            - generic [ref=e95]: Urutan
+            - spinbutton "Urutan" [ref=e96]: "1"
+          - button "Update Banner" [ref=e97] [cursor=pointer]
+        - generic [ref=e98]:
+          - paragraph [ref=e99]: bottom
+          - generic [ref=e100]:
+            - generic [ref=e101]: Judul
+            - textbox "Judul" [ref=e102]: CURATED DROP
+          - generic [ref=e103]:
+            - generic [ref=e104]: Subtitle
+            - textbox "Subtitle" [ref=e105]: Apparel and accessories in quiet contrast.
+          - generic [ref=e106]:
+            - generic [ref=e107]: Gambar URL
+            - textbox "Gambar URL" [ref=e108]: https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1800&q=90
+          - generic [ref=e109]:
+            - generic [ref=e110]: CTA Label
+            - textbox "CTA Label" [ref=e111]: SEE ALL PRODUCT
+          - generic [ref=e112]:
+            - generic [ref=e113]: CTA Link
+            - textbox "CTA Link" [ref=e114]: "#catalog"
+          - generic [ref=e115]:
+            - generic [ref=e116]: Urutan
+            - spinbutton "Urutan" [ref=e117]: "1"
+          - button "Update Banner" [ref=e118] [cursor=pointer]
+    - generic [ref=e119]:
+      - heading "Produk" [level=2] [ref=e120]
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - generic [ref=e123]:
+            - generic [ref=e124]: Nama
+            - textbox "Nama" [ref=e125]: PAPAPOW - Boxy Oversize Tee - White Signal
+          - generic [ref=e126]:
+            - generic [ref=e127]: Kategori
+            - textbox "Kategori" [ref=e128]: Tshirt
+          - generic [ref=e129]:
+            - generic [ref=e130]: Harga
+            - spinbutton "Harga" [ref=e131]: "219000"
+          - generic [ref=e132]:
+            - generic [ref=e133]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e134]: "279000"
+          - generic [ref=e135]:
+            - generic [ref=e136]: Diskon
+            - textbox "Diskon" [ref=e137]: 21%
+          - generic [ref=e138]:
+            - generic [ref=e139]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e140]
+          - generic [ref=e141]:
+            - generic [ref=e142]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e143]: https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e144]:
+            - generic [ref=e145]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e146]
+          - generic [ref=e147]:
+            - generic [ref=e148]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e149]: "[]"
+          - generic [ref=e151]:
+            - button "XS" [ref=e152] [cursor=pointer]
+            - button "S" [ref=e153] [cursor=pointer]
+            - button "M" [ref=e154] [cursor=pointer]
+            - button "L" [ref=e155] [cursor=pointer]
+            - button "XL" [ref=e156] [cursor=pointer]
+            - button "XXL" [ref=e157] [cursor=pointer]
+            - button "XXXL" [ref=e158] [cursor=pointer]
+            - button "FREE SIZE" [ref=e159] [cursor=pointer]
+          - generic [ref=e160]:
+            - generic [ref=e161]: Deskripsi
+            - textbox "Deskripsi" [ref=e162]: PAPAPOW Boxy Oversize Tee dengan fit oversize yang lega dan nyaman untuk aktivitas sehari-hari. Sablon Signal di bagian dada depan dengan detail premium.
+          - generic [ref=e163]:
+            - generic [ref=e164]: Material
+            - textbox "Material" [ref=e165]: "- Cotton Combed 30s - Sablon Plastisol"
+          - generic [ref=e166]:
+            - generic [ref=e167]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e168]: "200"
+          - generic [ref=e169]:
+            - generic [ref=e170]: Urutan
+            - spinbutton "Urutan" [ref=e171]: "1"
+          - generic [ref=e172]:
+            - checkbox "Tampil di homepage" [checked] [ref=e173]
+            - generic [ref=e174]: Tampil di homepage
+          - generic [ref=e175]:
+            - button "Update" [ref=e176] [cursor=pointer]
+            - button "Hapus" [ref=e177] [cursor=pointer]
+        - generic [ref=e178]:
+          - generic [ref=e179]:
+            - generic [ref=e180]: Nama
+            - textbox "Nama" [ref=e181]: PAPAPOW - Boxy Oversize Tee - Black Signal
+          - generic [ref=e182]:
+            - generic [ref=e183]: Kategori
+            - textbox "Kategori" [ref=e184]: Tshirt
+          - generic [ref=e185]:
+            - generic [ref=e186]: Harga
+            - spinbutton "Harga" [ref=e187]: "219000"
+          - generic [ref=e188]:
+            - generic [ref=e189]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e190]: "279000"
+          - generic [ref=e191]:
+            - generic [ref=e192]: Diskon
+            - textbox "Diskon" [ref=e193]: 21%
+          - generic [ref=e194]:
+            - generic [ref=e195]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e196]
+          - generic [ref=e197]:
+            - generic [ref=e198]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e199]: https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e200]:
+            - generic [ref=e201]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e202]
+          - generic [ref=e203]:
+            - generic [ref=e204]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e205]: "[]"
+          - generic [ref=e207]:
+            - button "XS" [ref=e208] [cursor=pointer]
+            - button "S" [ref=e209] [cursor=pointer]
+            - button "M" [ref=e210] [cursor=pointer]
+            - button "L" [ref=e211] [cursor=pointer]
+            - button "XL" [ref=e212] [cursor=pointer]
+            - button "XXL" [ref=e213] [cursor=pointer]
+            - button "XXXL" [ref=e214] [cursor=pointer]
+            - button "FREE SIZE" [ref=e215] [cursor=pointer]
+          - generic [ref=e216]:
+            - generic [ref=e217]: Deskripsi
+            - textbox "Deskripsi" [ref=e218]: PAPAPOW Boxy Oversize Tee dengan fit oversize yang lega dan nyaman untuk aktivitas sehari-hari. Sablon Signal di bagian dada depan dengan detail premium.
+          - generic [ref=e219]:
+            - generic [ref=e220]: Material
+            - textbox "Material" [ref=e221]: "- Cotton Combed 30s - Sablon Plastisol"
+          - generic [ref=e222]:
+            - generic [ref=e223]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e224]: "200"
+          - generic [ref=e225]:
+            - generic [ref=e226]: Urutan
+            - spinbutton "Urutan" [ref=e227]: "2"
+          - generic [ref=e228]:
+            - checkbox "Tampil di homepage" [checked] [ref=e229]
+            - generic [ref=e230]: Tampil di homepage
+          - generic [ref=e231]:
+            - button "Update" [ref=e232] [cursor=pointer]
+            - button "Hapus" [ref=e233] [cursor=pointer]
+        - generic [ref=e234]:
+          - generic [ref=e235]:
+            - generic [ref=e236]: Nama
+            - textbox "Nama" [ref=e237]: PAPAPOW - Polo Shirt - White Pace
+          - generic [ref=e238]:
+            - generic [ref=e239]: Kategori
+            - textbox "Kategori" [ref=e240]: Polo
+          - generic [ref=e241]:
+            - generic [ref=e242]: Harga
+            - spinbutton "Harga" [ref=e243]: "279000"
+          - generic [ref=e244]:
+            - generic [ref=e245]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e246]: "349000"
+          - generic [ref=e247]:
+            - generic [ref=e248]: Diskon
+            - textbox "Diskon" [ref=e249]: 20%
+          - generic [ref=e250]:
+            - generic [ref=e251]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e252]
+          - generic [ref=e253]:
+            - generic [ref=e254]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e255]: https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e256]:
+            - generic [ref=e257]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e258]
+          - generic [ref=e259]:
+            - generic [ref=e260]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e261]: "[]"
+          - generic [ref=e263]:
+            - button "XS" [ref=e264] [cursor=pointer]
+            - button "S" [ref=e265] [cursor=pointer]
+            - button "M" [ref=e266] [cursor=pointer]
+            - button "L" [ref=e267] [cursor=pointer]
+            - button "XL" [ref=e268] [cursor=pointer]
+            - button "XXL" [ref=e269] [cursor=pointer]
+            - button "XXXL" [ref=e270] [cursor=pointer]
+            - button "FREE SIZE" [ref=e271] [cursor=pointer]
+          - generic [ref=e272]:
+            - generic [ref=e273]: Deskripsi
+            - textbox "Deskripsi" [ref=e274]: PAPAPOW Polo Shirt dengan collar pique yang rapi dan elegan. Cocok untuk berbagai kesempatan, dari casual hingga semi-formal.
+          - generic [ref=e275]:
+            - generic [ref=e276]: Material
+            - textbox "Material" [ref=e277]: "- Pique Lacoste - Sablon Bordir"
+          - generic [ref=e278]:
+            - generic [ref=e279]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e280]: "250"
+          - generic [ref=e281]:
+            - generic [ref=e282]: Urutan
+            - spinbutton "Urutan" [ref=e283]: "3"
+          - generic [ref=e284]:
+            - checkbox "Tampil di homepage" [checked] [ref=e285]
+            - generic [ref=e286]: Tampil di homepage
+          - generic [ref=e287]:
+            - button "Update" [ref=e288] [cursor=pointer]
+            - button "Hapus" [ref=e289] [cursor=pointer]
+        - generic [ref=e290]:
+          - generic [ref=e291]:
+            - generic [ref=e292]: Nama
+            - textbox "Nama" [ref=e293]: PAPAPOW - Polo Shirt - Black Pace
+          - generic [ref=e294]:
+            - generic [ref=e295]: Kategori
+            - textbox "Kategori" [ref=e296]: Polo
+          - generic [ref=e297]:
+            - generic [ref=e298]: Harga
+            - spinbutton "Harga" [ref=e299]: "279000"
+          - generic [ref=e300]:
+            - generic [ref=e301]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e302]: "349000"
+          - generic [ref=e303]:
+            - generic [ref=e304]: Diskon
+            - textbox "Diskon" [ref=e305]: 20%
+          - generic [ref=e306]:
+            - generic [ref=e307]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e308]
+          - generic [ref=e309]:
+            - generic [ref=e310]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e311]: https://images.unsplash.com/photo-1618354691551-44de113f0164?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e312]:
+            - generic [ref=e313]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e314]
+          - generic [ref=e315]:
+            - generic [ref=e316]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e317]: "[]"
+          - generic [ref=e319]:
+            - button "XS" [ref=e320] [cursor=pointer]
+            - button "S" [ref=e321] [cursor=pointer]
+            - button "M" [ref=e322] [cursor=pointer]
+            - button "L" [ref=e323] [cursor=pointer]
+            - button "XL" [ref=e324] [cursor=pointer]
+            - button "XXL" [ref=e325] [cursor=pointer]
+            - button "XXXL" [ref=e326] [cursor=pointer]
+            - button "FREE SIZE" [ref=e327] [cursor=pointer]
+          - generic [ref=e328]:
+            - generic [ref=e329]: Deskripsi
+            - textbox "Deskripsi" [ref=e330]: PAPAPOW Polo Shirt dengan collar pique yang rapi dan elegan. Cocok untuk berbagai kesempatan, dari casual hingga semi-formal.
+          - generic [ref=e331]:
+            - generic [ref=e332]: Material
+            - textbox "Material" [ref=e333]: "- Pique Lacoste - Sablon Bordir"
+          - generic [ref=e334]:
+            - generic [ref=e335]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e336]: "250"
+          - generic [ref=e337]:
+            - generic [ref=e338]: Urutan
+            - spinbutton "Urutan" [ref=e339]: "4"
+          - generic [ref=e340]:
+            - checkbox "Tampil di homepage" [checked] [ref=e341]
+            - generic [ref=e342]: Tampil di homepage
+          - generic [ref=e343]:
+            - button "Update" [ref=e344] [cursor=pointer]
+            - button "Hapus" [ref=e345] [cursor=pointer]
+        - generic [ref=e346]:
+          - generic [ref=e347]:
+            - generic [ref=e348]: Nama
+            - textbox "Nama" [ref=e349]: PAPAPOW - Utility Pants - Bone
+          - generic [ref=e350]:
+            - generic [ref=e351]: Kategori
+            - textbox "Kategori" [ref=e352]: Pants
+          - generic [ref=e353]:
+            - generic [ref=e354]: Harga
+            - spinbutton "Harga" [ref=e355]: "419000"
+          - generic [ref=e356]:
+            - generic [ref=e357]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e358]: "499000"
+          - generic [ref=e359]:
+            - generic [ref=e360]: Diskon
+            - textbox "Diskon" [ref=e361]: 16%
+          - generic [ref=e362]:
+            - generic [ref=e363]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e364]
+          - generic [ref=e365]:
+            - generic [ref=e366]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e367]: https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e368]:
+            - generic [ref=e369]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e370]
+          - generic [ref=e371]:
+            - generic [ref=e372]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e373]: "[]"
+          - generic [ref=e375]:
+            - button "XS" [ref=e376] [cursor=pointer]
+            - button "S" [ref=e377] [cursor=pointer]
+            - button "M" [ref=e378] [cursor=pointer]
+            - button "L" [ref=e379] [cursor=pointer]
+            - button "XL" [ref=e380] [cursor=pointer]
+            - button "XXL" [ref=e381] [cursor=pointer]
+            - button "XXXL" [ref=e382] [cursor=pointer]
+            - button "FREE SIZE" [ref=e383] [cursor=pointer]
+          - generic [ref=e384]:
+            - generic [ref=e385]: Deskripsi
+            - textbox "Deskripsi" [ref=e386]: PAPAPOW Utility Pants dengan desain fungsional dan modern. Dilengkapi cargo pocket di samping untuk tampilan urban yang stylish.
+          - generic [ref=e387]:
+            - generic [ref=e388]: Material
+            - textbox "Material" [ref=e389]: "- Cotton Ripstop - Aksesoris Metal"
+          - generic [ref=e390]:
+            - generic [ref=e391]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e392]: "450"
+          - generic [ref=e393]:
+            - generic [ref=e394]: Urutan
+            - spinbutton "Urutan" [ref=e395]: "5"
+          - generic [ref=e396]:
+            - checkbox "Tampil di homepage" [checked] [ref=e397]
+            - generic [ref=e398]: Tampil di homepage
+          - generic [ref=e399]:
+            - button "Update" [ref=e400] [cursor=pointer]
+            - button "Hapus" [ref=e401] [cursor=pointer]
+        - generic [ref=e402]:
+          - generic [ref=e403]:
+            - generic [ref=e404]: Nama
+            - textbox "Nama" [ref=e405]: PAPAPOW - Heavy Hoodie - Night
+          - generic [ref=e406]:
+            - generic [ref=e407]: Kategori
+            - textbox "Kategori" [ref=e408]: Outerwear
+          - generic [ref=e409]:
+            - generic [ref=e410]: Harga
+            - spinbutton "Harga" [ref=e411]: "419000"
+          - generic [ref=e412]:
+            - generic [ref=e413]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e414]: "499000"
+          - generic [ref=e415]:
+            - generic [ref=e416]: Diskon
+            - textbox "Diskon" [ref=e417]: 16%
+          - generic [ref=e418]:
+            - generic [ref=e419]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e420]
+          - generic [ref=e421]:
+            - generic [ref=e422]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e423]: https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e424]:
+            - generic [ref=e425]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e426]
+          - generic [ref=e427]:
+            - generic [ref=e428]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e429]: "[]"
+          - generic [ref=e431]:
+            - button "XS" [ref=e432] [cursor=pointer]
+            - button "S" [ref=e433] [cursor=pointer]
+            - button "M" [ref=e434] [cursor=pointer]
+            - button "L" [ref=e435] [cursor=pointer]
+            - button "XL" [ref=e436] [cursor=pointer]
+            - button "XXL" [ref=e437] [cursor=pointer]
+            - button "XXXL" [ref=e438] [cursor=pointer]
+            - button "FREE SIZE" [ref=e439] [cursor=pointer]
+          - generic [ref=e440]:
+            - generic [ref=e441]: Deskripsi
+            - textbox "Deskripsi" [ref=e442]: PAPAPOW Heavy Hoodie dengan bahan tebal dan hangat untuk menemani hari-hari dingin. Desain minimalis dengan detail premium di setiap jahitan.
+          - generic [ref=e443]:
+            - generic [ref=e444]: Material
+            - textbox "Material" [ref=e445]: "- Fleece Premium 400gsm - Sablon Rubber"
+          - generic [ref=e446]:
+            - generic [ref=e447]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e448]: "550"
+          - generic [ref=e449]:
+            - generic [ref=e450]: Urutan
+            - spinbutton "Urutan" [ref=e451]: "6"
+          - generic [ref=e452]:
+            - checkbox "Tampil di homepage" [checked] [ref=e453]
+            - generic [ref=e454]: Tampil di homepage
+          - generic [ref=e455]:
+            - button "Update" [ref=e456] [cursor=pointer]
+            - button "Hapus" [ref=e457] [cursor=pointer]
+        - generic [ref=e458]:
+          - generic [ref=e459]:
+            - generic [ref=e460]: Nama
+            - textbox "Nama" [ref=e461]: PAPAPOW - Longsleeve Waffle - Grid
+          - generic [ref=e462]:
+            - generic [ref=e463]: Kategori
+            - textbox "Kategori" [ref=e464]: Longsleeve
+          - generic [ref=e465]:
+            - generic [ref=e466]: Harga
+            - spinbutton "Harga" [ref=e467]: "349000"
+          - generic [ref=e468]:
+            - generic [ref=e469]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e470]: "469000"
+          - generic [ref=e471]:
+            - generic [ref=e472]: Diskon
+            - textbox "Diskon" [ref=e473]: 25%
+          - generic [ref=e474]:
+            - generic [ref=e475]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e476]
+          - generic [ref=e477]:
+            - generic [ref=e478]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e479]: https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e480]:
+            - generic [ref=e481]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e482]
+          - generic [ref=e483]:
+            - generic [ref=e484]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e485]: "[]"
+          - generic [ref=e487]:
+            - button "XS" [ref=e488] [cursor=pointer]
+            - button "S" [ref=e489] [cursor=pointer]
+            - button "M" [ref=e490] [cursor=pointer]
+            - button "L" [ref=e491] [cursor=pointer]
+            - button "XL" [ref=e492] [cursor=pointer]
+            - button "XXL" [ref=e493] [cursor=pointer]
+            - button "XXXL" [ref=e494] [cursor=pointer]
+            - button "FREE SIZE" [ref=e495] [cursor=pointer]
+          - generic [ref=e496]:
+            - generic [ref=e497]: Deskripsi
+            - textbox "Deskripsi" [ref=e498]: PAPAPOW Longsleeve Waffle dengan tekstur waffle yang unik dan breathable. Fit slim untuk tampilan yang clean dan modern.
+          - generic [ref=e499]:
+            - generic [ref=e500]: Material
+            - textbox "Material" [ref=e501]: "- Waffle Knit Cotton - Sablon Plastisol"
+          - generic [ref=e502]:
+            - generic [ref=e503]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e504]: "300"
+          - generic [ref=e505]:
+            - generic [ref=e506]: Urutan
+            - spinbutton "Urutan" [ref=e507]: "7"
+          - generic [ref=e508]:
+            - checkbox "Tampil di homepage" [checked] [ref=e509]
+            - generic [ref=e510]: Tampil di homepage
+          - generic [ref=e511]:
+            - button "Update" [ref=e512] [cursor=pointer]
+            - button "Hapus" [ref=e513] [cursor=pointer]
+        - generic [ref=e514]:
+          - generic [ref=e515]:
+            - generic [ref=e516]: Nama
+            - textbox "Nama" [ref=e517]: PAPAPOW - Cap - Core Mark
+          - generic [ref=e518]:
+            - generic [ref=e519]: Kategori
+            - textbox "Kategori" [ref=e520]: Accessories
+          - generic [ref=e521]:
+            - generic [ref=e522]: Harga
+            - spinbutton "Harga" [ref=e523]: "175000"
+          - generic [ref=e524]:
+            - generic [ref=e525]: Harga Coret
+            - spinbutton "Harga Coret" [ref=e526]: "209000"
+          - generic [ref=e527]:
+            - generic [ref=e528]: Diskon
+            - textbox "Diskon" [ref=e529]: 16%
+          - generic [ref=e530]:
+            - generic [ref=e531]: Upload Gambar Baru
+            - button "Upload Gambar Baru" [ref=e532]
+          - generic [ref=e533]:
+            - generic [ref=e534]: — atau Gambar saat ini (URL)
+            - textbox "— atau Gambar saat ini (URL)" [ref=e535]: https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=90
+          - generic [ref=e536]:
+            - generic [ref=e537]: Upload Gambar Tambahan
+            - button "Upload Gambar Tambahan" [ref=e538]
+          - generic [ref=e539]:
+            - generic [ref=e540]: — atau Gambar Tambahan (JSON)
+            - textbox "— atau Gambar Tambahan (JSON)" [ref=e541]: "[]"
+          - generic [ref=e543]:
+            - button "XS" [ref=e544] [cursor=pointer]
+            - button "S" [ref=e545] [cursor=pointer]
+            - button "M" [ref=e546] [cursor=pointer]
+            - button "L" [ref=e547] [cursor=pointer]
+            - button "XL" [ref=e548] [cursor=pointer]
+            - button "XXL" [ref=e549] [cursor=pointer]
+            - button "XXXL" [ref=e550] [cursor=pointer]
+            - button "FREE SIZE" [ref=e551] [cursor=pointer]
+          - generic [ref=e552]:
+            - generic [ref=e553]: Deskripsi
+            - textbox "Deskripsi" [ref=e554]: PAPAPOW Cap dengan embroidery Core Mark logo di bagian depan. Adjustable strap untuk kenyamanan maksimal.
+          - generic [ref=e555]:
+            - generic [ref=e556]: Material
+            - textbox "Material" [ref=e557]: "- Canvas Premium - Bordir 3D - Adjustable Strap"
+          - generic [ref=e558]:
+            - generic [ref=e559]: Berat (gram)
+            - spinbutton "Berat (gram)" [ref=e560]: "150"
+          - generic [ref=e561]:
+            - generic [ref=e562]: Urutan
+            - spinbutton "Urutan" [ref=e563]: "8"
+          - generic [ref=e564]:
+            - checkbox "Tampil di homepage" [checked] [ref=e565]
+            - generic [ref=e566]: Tampil di homepage
+          - generic [ref=e567]:
+            - button "Update" [ref=e568] [cursor=pointer]
+            - button "Hapus" [ref=e569] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e575] [cursor=pointer]:
+    - img [ref=e576]
