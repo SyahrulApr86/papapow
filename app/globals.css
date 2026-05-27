@@ -336,9 +336,30 @@ input {
   margin-bottom: 18px;
   overflow: hidden;
   place-items: center;
+  position: relative;
 }
 
-.product-image img,
+.product-image img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+  transition: opacity 0.25s;
+}
+
+.product-image .hover-img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.product-card:hover .product-image .main-img {
+  opacity: 0;
+}
+
+.product-card:hover .product-image .hover-img {
+  opacity: 1;
+}
+
 .admin-thumb {
   height: 100%;
   object-fit: cover;

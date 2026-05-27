@@ -17,7 +17,10 @@ export function CatalogGrid({ products }: { products: Product[] }) {
               <span className="discount-badge">{product.discount_label}</span>
             ) : null}
             <a className="product-image" href={`/products/${product.id}`}>
-              <img src={product.image_url} alt={product.name} />
+              <img className="main-img" src={product.image_url} alt={product.name} />
+              {product.images?.[0] ? (
+                <img className="hover-img" src={product.images[0]} alt="" />
+              ) : null}
             </a>
             <a className="card-link" href={`/products/${product.id}`}>
               <p className="product-category">{product.category}</p>
