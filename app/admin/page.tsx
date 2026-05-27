@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { getBanners, getProducts } from "@/lib/catalog";
 import { isAdmin } from "@/lib/admin-auth";
 import { PapapowLogo } from "@/components/papapow-logo";
 import { AdminSizePicker } from "@/components/admin-size-picker";
+import { AdminToast } from "@/components/admin-toast";
 import {
   createProduct,
   deleteProduct,
@@ -83,6 +85,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
   return (
     <main className="admin-shell">
+      <Suspense><AdminToast /></Suspense>
       <header className="admin-header">
         <div>
           <a className="brand-mark" href="/">

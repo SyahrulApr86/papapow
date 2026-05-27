@@ -1886,3 +1886,32 @@ textarea {
 .atc-submit:hover {
   opacity: 0.85;
 }
+
+/* ── Admin Toast ── */
+.admin-toast {
+  align-items: center;
+  background: #1a1a1a;
+  border-radius: 10px;
+  bottom: 28px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  color: #fff;
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  gap: 10px;
+  left: 50%;
+  opacity: 0;
+  padding: 12px 20px;
+  pointer-events: none;
+  position: fixed;
+  transform: translateX(-50%) translateY(12px);
+  transition: opacity 0.22s, transform 0.22s;
+  white-space: nowrap;
+  z-index: 9999;
+}
+
+.admin-toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}

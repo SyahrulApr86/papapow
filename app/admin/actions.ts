@@ -82,7 +82,7 @@ export async function createProduct(formData: FormData) {
   );
 
   revalidatePath("/");
-  revalidatePath("/admin");
+  redirect("/admin?updated=Produk+berhasil+ditambahkan");
 }
 
 export async function updateProduct(formData: FormData) {
@@ -123,7 +123,7 @@ export async function updateProduct(formData: FormData) {
   );
 
   revalidatePath("/");
-  revalidatePath("/admin");
+  redirect("/admin?updated=Produk+berhasil+diupdate");
 }
 
 export async function deleteProduct(formData: FormData) {
@@ -131,7 +131,7 @@ export async function deleteProduct(formData: FormData) {
 
   await db.query("DELETE FROM products WHERE id = $1", [intValue(formData, "id")]);
   revalidatePath("/");
-  revalidatePath("/admin");
+  redirect("/admin?updated=Produk+berhasil+dihapus");
 }
 
 export async function updateBanner(formData: FormData) {
@@ -158,5 +158,5 @@ export async function updateBanner(formData: FormData) {
   );
 
   revalidatePath("/");
-  revalidatePath("/admin");
+  redirect("/admin?updated=Banner+berhasil+diupdate");
 }
