@@ -1,0 +1,36 @@
+- generic [active] [ref=e1] [box=0,0,390,2483]:
+  - main [ref=e2] [box=0,0,390,2483]:
+    - generic "Primary navigation" [ref=e3] [box=0,0,390,56]:
+      - button "Menu" [ref=e4] [box=14,10,36,36]
+      - link "PAPAPOW" [ref=e7] [cursor=pointer] [box=50,12,102,31]:
+        - /url: /
+      - navigation "Shop actions" [ref=e8] [box=240,10,136,36]:
+        - link "Wishlist" [ref=e9] [cursor=pointer] [box=240,10,28,36]:
+          - /url: "#catalog"
+        - link "Cart" [ref=e10] [cursor=pointer] [box=276,10,28,36]:
+          - /url: "#catalog"
+        - link "Admin" [ref=e11] [cursor=pointer] [box=312,10,28,36]:
+          - /url: /admin
+        - link "⌕ Cari" [ref=e12] [cursor=pointer] [box=348,10,28,36]:
+          - /url: "#catalog"
+    - generic [ref=e14] [box=0,544,390,1579]:
+      - heading "ALL COLLECTION" [level=2] [ref=e15] [box=23,578,343,21]
+      - generic [ref=e16] [box=23,627,343,1398]:
+        - article [ref=e17] [box=23,627,167,349]
+        - article [ref=e27] [box=200,627,167,349]
+        - article [ref=e37] [box=23,986,167,335]
+        - article [ref=e47] [box=200,986,167,335]
+        - article [ref=e57] [box=23,1331,167,335]
+        - article [ref=e67] [box=200,1331,167,335]
+        - article [ref=e77] [box=23,1675,167,349]
+        - article [ref=e87] [box=200,1675,167,349]
+      - link "Kelola Katalog" [ref=e97] [cursor=pointer] [box=116,2053,157,36]:
+        - /url: /admin
+    - generic [ref=e99] [box=24,2245,303,115]:
+      - paragraph [ref=e100] [box=24,2245,303,14]: Apparel and accessories in quiet contrast.
+      - heading "CURATED DROP" [level=2] [ref=e101] [box=24,2269,303,33]
+      - link "SEE ALL PRODUCT" [ref=e102] [cursor=pointer] [box=24,2324,196,36]:
+        - /url: "#catalog"
+  - button "Open Next.js Dev Tools" [ref=e108] [cursor=pointer] [box=22,790,32,32]:
+    - img [ref=e109] [box=22,786,40,40]
+  - alert [ref=e112] [box=-1,2482,1,1]

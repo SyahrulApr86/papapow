@@ -1,0 +1,177 @@
+import { getBanners, getProducts } from "@/lib/catalog";
+import { isAdmin } from "@/lib/admin-auth";
+import { PapapowLogo } from "@/components/papapow-logo";
+import {
+  createProduct,
+  deleteProduct,
+  loginAction,
+  logoutAction,
+  updateBanner,
+  updateProduct,
+} from "@/app/admin/actions";
+
+export const dynamic = "force-dynamic";
+
+type AdminPageProps = {
+  searchParams: Promise<{ error?: string }>;
+};
+
+function Field({
+  label,
+  name,
+  defaultValue,
+  type = "text",
+  required = false,
+}: {
+  label: string;
+  name: string;
+  defaultValue?: string | number | null;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <label>
+      <span>{label}</span>
+      <input
+        name={name}
+        type={type}
+        defaultValue={defaultValue ?? ""}
+        required={required}
+      />
+    </label>
+  );
+}
+
+export default async function AdminPage({ searchParams }: AdminPageProps) {
+  const [{ error }, allowed] = await Promise.all([searchParams, isAdmin()]);
+
+  if (!allowed) {
+    return (
+      <main className="admin-shell login-shell">
+        <form className="login-panel" action={loginAction}>
+          <a className="brand-mark" href="/">
+            <PapapowLogo compact />
+          </a>
+          <h1>Admin Panel</h1>
+          <p>Masuk untuk kelola produk dan banner katalog.</p>
+          {error ? <strong className="form-error">Password salah.</strong> : null}
+          <Field label="Password" name="password" type="password" required />
+          <button className="admin-button" type="submit">
+            Masuk
+          </button>
+        </form>
+      </main>
+    );
+  }
+
+  const [products, banners] = await Promise.all([getProducts(), getBanners()]);
+
+  return (
+    <main className="admin-shell">
+      <header className="admin-header">
+        <div>
+          <a className="brand-mark" href="/">
+            <PapapowLogo compact />
+          </a>
+          <h1>Catalog Admin</h1>
+        </div>
+        <form action={logoutAction}>
+          <button className="admin-button secondary" type="submit">
+            Keluar
+          </button>
+        </form>
+      </header>
+
+      <section className="admin-section">
+        <h2>Tambah Produk</h2>
+        <form className="admin-form product-form" action={createProduct}>
+          <Field label="Nama" name="name" required />
+          <Field label="Kategori" name="category" required />
+          <Field label="Harga" name="price" type="number" required />
+          <Field label="Harga Coret" name="compare_at_price" type="number" />
+          <Field label="Diskon" name="discount_label" />
+          <Field label="Gambar URL" name="image_url" required />
+          <Field label="Urutan" name="sort_order" type="number" defaultValue={0} />
+          <label className="check-field">
+            <input name="is_featured" type="checkbox" defaultChecked />
+            <span>Tampil di homepage</span>
+          </label>
+          <button className="admin-button" type="submit">
+            Simpan Produk
+          </button>
+        </form>
+      </section>
+
+      <section className="admin-section">
+        <h2>Banner</h2>
+        <div className="admin-list">
+          {banners.map((banner) => (
+            <form className="admin-form" action={updateBanner} key={banner.id}>
+              <input name="id" type="hidden" value={banner.id} />
+              <p className="eyebrow">{banner.placement}</p>
+              <Field label="Judul" name="title" defaultValue={banner.title} required />
+              <Field label="Subtitle" name="subtitle" defaultValue={banner.subtitle} />
+              <Field
+                label="Gambar URL"
+                name="image_url"
+                defaultValue={banner.image_url}
+                required
+              />
+              <Field label="CTA Label" name="cta_label" defaultValue={banner.cta_label} />
+              <Field label="CTA Link" name="cta_href" defaultValue={banner.cta_href} />
+              <Field
+                label="Urutan"
+                name="sort_order"
+                type="number"
+                defaultValue={banner.sort_order}
+              />
+              <button className="admin-button" type="submit">
+                Update Banner
+              </button>
+            </form>
+          ))}
+        </div>
+      </section>
+
+      <section className="admin-section">
+        <h2>Produk</h2>
+        <div className="admin-list">
+          {products.map((product) => (
+            <form className="admin-form product-form" action={updateProduct} key={product.id}>
+              <input name="id" type="hidden" value={product.id} />
+              <img className="admin-thumb" src={product.image_url} alt="" />
+              <Field label="Nama" name="name" defaultValue={product.name} required />
+              <Field label="Kategori" name="category" defaultValue={product.category} required />
+              <Field label="Harga" name="price" type="number" defaultValue={product.price} required />
+              <Field
+                label="Harga Coret"
+                name="compare_at_price"
+                type="number"
+                defaultValue={product.compare_at_price}
+              />
+              <Field label="Diskon" name="discount_label" defaultValue={product.discount_label} />
+              <Field label="Gambar URL" name="image_url" defaultValue={product.image_url} required />
+              <Field label="Urutan" name="sort_order" type="number" defaultValue={product.sort_order} />
+              <label className="check-field">
+                <input name="is_featured" type="checkbox" defaultChecked={product.is_featured} />
+                <span>Tampil di homepage</span>
+              </label>
+              <div className="form-actions">
+                <button className="admin-button" type="submit">
+                  Update
+                </button>
+                <button
+                  className="admin-button danger"
+                  formAction={deleteProduct}
+                  type="submit"
+                >
+                  Hapus
+                </button>
+              </div>
+            </form>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}

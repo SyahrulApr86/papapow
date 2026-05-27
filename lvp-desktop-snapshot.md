@@ -1,0 +1,31 @@
+- generic [ref=e3] [box=0,0,1440,3650]:
+  - banner [ref=e4] [box=0,0,1440,56]:
+    - generic [ref=e6] [box=8,0,1424,56]:
+      - button "Menu" [ref=e7] [cursor=pointer] [box=8,10,36,36]:
+        - img [ref=e9] [box=14,16,24,24]
+      - img "Logo of Lovepleasure" [ref=e217] [cursor=pointer] [box=701,6,78,44]
+      - generic [ref=e218] [box=973,10,459,36]:
+        - generic [ref=e220] [cursor=pointer] [box=1054,18,62,20]
+        - button "Wishlist" [ref=e222] [cursor=pointer] [box=1120,10,36,36]
+        - button "Cart" [ref=e228] [cursor=pointer] [box=1160,10,36,36]
+        - button "Account" [ref=e235] [cursor=pointer] [box=1200,10,36,36]
+        - generic "Search" [ref=e241] [box=1248,10,176,36]
+  - navigation [ref=e246] [box=-563,0,512,1200]:
+    - generic [ref=e248] [box=-563,0,512,52]:
+      - button "Search" [ref=e249] [cursor=pointer] [box=-555,8,36,36]:
+        - img [ref=e251] [box=-549,14,24,24]
+      - button "Close" [ref=e253] [cursor=pointer] [box=-95,8,36,36]:
+        - img [ref=e255] [box=-89,14,24,24]
+  - main [ref=e40] [box=0,56,1440,3546]:
+    - status [ref=e257] [box=-1,55,1,1]: Lovepleasure
+    - generic [ref=e43] [box=0,56,1440,3546]:
+      - img "Banner Image 1" [ref=e262] [cursor=pointer] [box=0,56,1440,1800]
+      - heading "ALL COLLECTION" [level=3] [ref=e59] [box=92,1896,1256,26]:
+        - strong [ref=e60] [box=635,1897,170,24]: ALL COLLECTION
+      - generic [ref=e63] [box=80,1942,1280,944]:
+        - generic [ref=e66] [box=80,1942,1280,896]
+        - button "Tampilkan Semua" [ref=e279] [cursor=pointer] [box=648,2850,145,36]
+      - generic [ref=e281] [box=0,2946,1440,656]:
+        - img "Banner Image 1" [ref=e284] [box=0,2946,1440,656]
+        - button "SEE ALL PRODUCT" [ref=e287] [cursor=pointer] [box=644,3256,151,36]
+  - contentinfo [ref=e214] [box=0,3602,1440,48]

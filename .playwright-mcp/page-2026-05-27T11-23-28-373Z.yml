@@ -1,0 +1,106 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic "Primary navigation" [ref=e3]:
+      - button "Menu" [ref=e4]
+      - link "PAPAPOW" [ref=e7] [cursor=pointer]:
+        - /url: /
+      - navigation "Shop actions" [ref=e8]:
+        - link "Wishlist" [ref=e9] [cursor=pointer]:
+          - /url: "#catalog"
+          - text: ♡
+        - link "Cart" [ref=e10] [cursor=pointer]:
+          - /url: "#catalog"
+          - text: □
+        - link "Admin" [ref=e11] [cursor=pointer]:
+          - /url: /admin
+          - text: ○
+        - link "Cari" [ref=e12] [cursor=pointer]:
+          - /url: "#catalog"
+    - generic [ref=e14]:
+      - paragraph [ref=e15]: Monochrome goods for daily motion.
+      - heading "PAPAPOW" [level=1] [ref=e16]
+    - generic [ref=e17]:
+      - heading "ALL COLLECTION" [level=2] [ref=e18]
+      - generic [ref=e19]:
+        - article [ref=e20]:
+          - generic [ref=e21]: 21%
+          - img "PAPAPOW - Boxy Oversize Tee - White Signal" [ref=e23]
+          - paragraph [ref=e24]: Tshirt
+          - heading "PAPAPOW - Boxy Oversize Tee - White Signal" [level=3] [ref=e25]
+          - generic [ref=e26]:
+            - generic [ref=e27]: Rp 279.000
+            - strong [ref=e28]: Rp 219.000
+          - button "Beli" [ref=e29] [cursor=pointer]
+        - article [ref=e30]:
+          - generic [ref=e31]: 21%
+          - img "PAPAPOW - Boxy Oversize Tee - Black Signal" [ref=e33]
+          - paragraph [ref=e34]: Tshirt
+          - heading "PAPAPOW - Boxy Oversize Tee - Black Signal" [level=3] [ref=e35]
+          - generic [ref=e36]:
+            - generic [ref=e37]: Rp 279.000
+            - strong [ref=e38]: Rp 219.000
+          - button "Beli" [ref=e39] [cursor=pointer]
+        - article [ref=e40]:
+          - generic [ref=e41]: 20%
+          - img "PAPAPOW - Polo Shirt - White Pace" [ref=e43]
+          - paragraph [ref=e44]: Polo
+          - heading "PAPAPOW - Polo Shirt - White Pace" [level=3] [ref=e45]
+          - generic [ref=e46]:
+            - generic [ref=e47]: Rp 349.000
+            - strong [ref=e48]: Rp 279.000
+          - button "Beli" [ref=e49] [cursor=pointer]
+        - article [ref=e50]:
+          - generic [ref=e51]: 20%
+          - img "PAPAPOW - Polo Shirt - Black Pace" [ref=e53]
+          - paragraph [ref=e54]: Polo
+          - heading "PAPAPOW - Polo Shirt - Black Pace" [level=3] [ref=e55]
+          - generic [ref=e56]:
+            - generic [ref=e57]: Rp 349.000
+            - strong [ref=e58]: Rp 279.000
+          - button "Beli" [ref=e59] [cursor=pointer]
+        - article [ref=e60]:
+          - generic [ref=e61]: 16%
+          - img "PAPAPOW - Utility Pants - Bone" [ref=e63]
+          - paragraph [ref=e64]: Pants
+          - heading "PAPAPOW - Utility Pants - Bone" [level=3] [ref=e65]
+          - generic [ref=e66]:
+            - generic [ref=e67]: Rp 499.000
+            - strong [ref=e68]: Rp 419.000
+          - button "Beli" [ref=e69] [cursor=pointer]
+        - article [ref=e70]:
+          - generic [ref=e71]: 16%
+          - img "PAPAPOW - Heavy Hoodie - Night" [ref=e73]
+          - paragraph [ref=e74]: Outerwear
+          - heading "PAPAPOW - Heavy Hoodie - Night" [level=3] [ref=e75]
+          - generic [ref=e76]:
+            - generic [ref=e77]: Rp 499.000
+            - strong [ref=e78]: Rp 419.000
+          - button "Beli" [ref=e79] [cursor=pointer]
+        - article [ref=e80]:
+          - generic [ref=e81]: 25%
+          - img "PAPAPOW - Longsleeve Waffle - Grid" [ref=e83]
+          - paragraph [ref=e84]: Longsleeve
+          - heading "PAPAPOW - Longsleeve Waffle - Grid" [level=3] [ref=e85]
+          - generic [ref=e86]:
+            - generic [ref=e87]: Rp 469.000
+            - strong [ref=e88]: Rp 349.000
+          - button "Beli" [ref=e89] [cursor=pointer]
+        - article [ref=e90]:
+          - generic [ref=e91]: 16%
+          - img "PAPAPOW - Cap - Core Mark" [ref=e93]
+          - paragraph [ref=e94]: Accessories
+          - heading "PAPAPOW - Cap - Core Mark" [level=3] [ref=e95]
+          - generic [ref=e96]:
+            - generic [ref=e97]: Rp 209.000
+            - strong [ref=e98]: Rp 175.000
+          - button "Beli" [ref=e99] [cursor=pointer]
+      - link "Kelola Katalog" [ref=e100] [cursor=pointer]:
+        - /url: /admin
+    - generic [ref=e102]:
+      - paragraph [ref=e103]: Apparel and accessories in quiet contrast.
+      - heading "CURATED DROP" [level=2] [ref=e104]
+      - link "SEE ALL PRODUCT" [ref=e105] [cursor=pointer]:
+        - /url: "#catalog"
+  - button "Open Next.js Dev Tools" [ref=e111] [cursor=pointer]:
+    - img [ref=e112]
+  - alert [ref=e115]

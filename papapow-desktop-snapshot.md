@@ -1,0 +1,39 @@
+- generic [active] [ref=e1] [box=0,0,1440,3218]:
+  - main [ref=e2] [box=0,0,1440,3218]:
+    - generic "Primary navigation" [ref=e3] [box=0,0,1440,56]:
+      - button "Menu" [ref=e4] [box=14,10,36,36]
+      - link "PAPAPOW" [ref=e7] [cursor=pointer] [box=669,12,102,31]:
+        - /url: /
+      - navigation "Shop actions" [ref=e8] [box=771,10,655,36]:
+        - link "Wishlist" [ref=e9] [cursor=pointer] [box=1130,10,28,36]:
+          - /url: "#catalog"
+        - link "Cart" [ref=e10] [cursor=pointer] [box=1170,10,28,36]:
+          - /url: "#catalog"
+        - link "Admin" [ref=e11] [cursor=pointer] [box=1210,10,28,36]:
+          - /url: /admin
+        - link "Cari" [ref=e12] [cursor=pointer] [box=1250,10,176,36]:
+          - /url: "#catalog"
+    - generic [ref=e14] [box=58,979,760,163]:
+      - paragraph [ref=e15] [box=58,979,760,14]: Monochrome goods for daily motion.
+      - heading "PAPAPOW" [level=1] [ref=e16] [box=58,1003,760,139]
+    - generic [ref=e17] [box=0,1200,1440,1226]:
+      - heading "ALL COLLECTION" [level=2] [ref=e18] [box=86,1276,1267,21]
+      - generic [ref=e19] [box=86,1325,1267,961]:
+        - article [ref=e20] [box=86,1325,303,471]
+        - article [ref=e30] [box=408,1325,303,471]
+        - article [ref=e40] [box=729,1325,303,471]
+        - article [ref=e50] [box=1050,1325,303,471]
+        - article [ref=e60] [box=86,1814,303,471]
+        - article [ref=e70] [box=408,1814,303,471]
+        - article [ref=e80] [box=729,1814,303,471]
+        - article [ref=e90] [box=1050,1814,303,471]
+      - link "Kelola Katalog" [ref=e100] [cursor=pointer] [box=641,2314,157,36]:
+        - /url: /admin
+    - generic [ref=e102] [box=58,2692,760,259]:
+      - paragraph [ref=e103] [box=58,2692,760,14]: Apparel and accessories in quiet contrast.
+      - heading "CURATED DROP" [level=2] [ref=e104] [box=58,2716,760,177]
+      - link "SEE ALL PRODUCT" [ref=e105] [cursor=pointer] [box=58,2915,196,36]:
+        - /url: "#catalog"
+  - button "Open Next.js Dev Tools" [ref=e111] [cursor=pointer] [box=22,1146,32,32]:
+    - img [ref=e112] [box=22,1142,40,40]
+  - alert [ref=e115] [box=-1,3217,1,1]

@@ -1,0 +1,480 @@
+:root {
+  --bg: #f7f7f5;
+  --paper: #ffffff;
+  --ink: #111111;
+  --muted: #696969;
+  --line: #deded9;
+  --soft: #efefec;
+  --danger: #7a1111;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.site-header {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  height: 56px;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 14px;
+  position: sticky;
+  right: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.brand-mark {
+  align-items: center;
+  background: #0f0f0f;
+  border: 1px solid #2d2d2d;
+  border-radius: 999px;
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  min-width: 124px;
+  padding: 4px 10px;
+}
+
+.papapow-logo {
+  display: inline-flex;
+  width: min(560px, 78vw);
+}
+
+.papapow-logo.compact {
+  width: 118px;
+}
+
+.papapow-logo svg {
+  display: block;
+  height: auto;
+  overflow: visible;
+  width: 100%;
+}
+
+.papapow-logo text {
+  fill: url("#chrome");
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -2px;
+  paint-order: stroke;
+  stroke: #f5f5f5;
+  stroke-width: 1.4px;
+}
+
+.logo-orbit,
+.logo-slash {
+  fill: none;
+  stroke: #f3f3f3;
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.logo-slash {
+  stroke-width: 5;
+}
+
+.logo-star {
+  fill: #f7f7f7;
+  stroke: #8e8e8e;
+  stroke-width: 1;
+}
+
+.logo-star.small {
+  transform-origin: 252px 35px;
+}
+
+.logo-star.mini {
+  transform-origin: 219px 70px;
+}
+
+.header-actions {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+}
+
+.header-actions a {
+  align-items: center;
+  display: inline-flex;
+  font-size: 18px;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+  transition: background 0.15s;
+  border-radius: 50%;
+}
+
+.header-actions a:hover {
+  background: var(--soft);
+}
+
+.hero {
+  align-items: flex-end;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  min-height: calc(100vh - 56px);
+  padding: clamp(24px, 4vw, 64px);
+  position: relative;
+}
+
+.hero::before,
+.bottom-banner::before {
+  background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.5));
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.hero-copy,
+.bottom-banner > div {
+  color: #ffffff;
+  max-width: 760px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-copy .papapow-logo {
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55));
+  margin-bottom: 18px;
+}
+
+.hero-copy p,
+.bottom-banner p,
+.eyebrow,
+.product-category {
+  color: currentColor;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.catalog-section {
+  padding: clamp(34px, 6vw, 76px) clamp(8px, 6vw, 88px);
+}
+
+.catalog-section h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  margin: 0 0 28px;
+  text-align: center;
+}
+
+.product-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+.product-card {
+  background: var(--paper);
+  border: 1px solid #ececea;
+  border-radius: 6px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+  display: block;
+  min-width: 0;
+  padding: 12px;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+
+.product-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.discount-badge {
+  background: var(--ink);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 6px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 1;
+}
+
+.product-image {
+  aspect-ratio: 1 / 1;
+  background: #f4f4f2;
+  display: grid;
+  margin-bottom: 18px;
+  overflow: hidden;
+  place-items: center;
+}
+
+.product-image img,
+.admin-thumb {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.product-category {
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.product-card h3 {
+  font-size: 15px;
+  line-height: 1.3;
+  margin: 0 0 8px;
+  min-height: 40px;
+}
+
+.price-row {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 2px;
+}
+
+.compare-price {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.primary-cta,
+.bottom-banner a,
+.admin-button {
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 800;
+  height: 36px;
+  justify-content: center;
+}
+
+.primary-cta,
+.bottom-banner a,
+.admin-button {
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: #ffffff;
+  padding: 0 22px;
+}
+
+.primary-cta {
+  display: flex;
+  margin: 28px auto 0;
+  width: max-content;
+}
+
+.bottom-banner {
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  min-height: 55vw;
+  padding: clamp(24px, 4vw, 64px);
+  position: relative;
+}
+
+.bottom-banner h2 {
+  font-size: clamp(36px, 7vw, 96px);
+  line-height: 0.92;
+  margin: 0 0 22px;
+}
+
+.admin-shell {
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 32px 18px 80px;
+}
+
+.login-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
+
+.admin-header {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding-bottom: 22px;
+}
+
+.admin-header h1,
+.login-panel h1 {
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 0.95;
+  margin: 18px 0 0;
+}
+
+.admin-section {
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0;
+}
+
+.admin-section h2 {
+  font-size: 18px;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+
+.admin-list {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-form,
+.login-panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.product-form {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.product-form .admin-thumb {
+  aspect-ratio: 1 / 1;
+  background: var(--soft);
+  border-radius: 6px;
+  grid-row: span 3;
+}
+
+.login-panel {
+  max-width: 430px;
+  width: 100%;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
+label span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+input {
+  background: #fbfbfa;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  height: 42px;
+  padding: 0 12px;
+  width: 100%;
+}
+
+.check-field {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.check-field input {
+  height: 18px;
+  width: 18px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+.danger {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+.form-error {
+  color: var(--danger);
+}
+
+@media (max-width: 860px) {
+  .hero {
+    min-height: 488px;
+  }
+
+  .hero-copy {
+    display: block;
+    max-width: 100%;
+  }
+
+  .hero-copy .papapow-logo {
+    width: min(310px, 86vw);
+  }
+
+  .hero-copy p {
+    display: none;
+  }
+
+  .product-grid {
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-card {
+    padding: 10px;
+  }
+
+  .product-card h3 {
+    font-size: 14px;
+    min-height: 0;
+  }
+
+  .bottom-banner {
+    min-height: 360px;
+  }
+
+  .product-form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header {
+    align-items: flex-start;
+    gap: 18px;
+  }
+}
