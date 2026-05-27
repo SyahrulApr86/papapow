@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export function AdminToast() {
@@ -9,23 +9,24 @@ export function AdminToast() {
   const pathname = usePathname();
   const [message, setMessage] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
+  const processedRef = useRef<string | null>(null);
 
+  // Capture message once per unique updated param, then clear URL
   useEffect(() => {
     const updated = searchParams.get("updated");
-    if (!updated) return;
-
+    if (!updated || processedRef.current === updated) return;
+    processedRef.current = updated;
     setMessage(decodeURIComponent(updated));
     setVisible(true);
+    router.replace(pathname, { scroll: false });
+  }, [searchParams, pathname, router]);
 
-    // Clear the query param from URL without reload
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("updated");
-    const newUrl = params.size ? `${pathname}?${params}` : pathname;
-    router.replace(newUrl, { scroll: false });
-
+  // Independent dismiss timer — not tied to searchParams changes
+  useEffect(() => {
+    if (!visible) return;
     const timer = setTimeout(() => setVisible(false), 3000);
     return () => clearTimeout(timer);
-  }, [searchParams, pathname, router]);
+  }, [visible]);
 
   if (!message) return null;
 
