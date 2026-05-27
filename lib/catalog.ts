@@ -55,12 +55,4 @@ export async function getBanners() {
   return rows;
 }
 
-export function formatRupiah(value: number) {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-  })
-    .format(value)
-    .replace("IDR", "Rp");
-}
+export { formatRupiah } from "@/lib/format";
