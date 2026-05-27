@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { db, type Product } from "@/lib/db";
+import { db } from "@/lib/db";
 import { isAdmin, loginAdmin, logoutAdmin } from "@/lib/admin-auth";
 
 function text(formData: FormData, key: string) {
@@ -26,32 +26,29 @@ function nullableText(formData: FormData, key: string) {
   return value || null;
 }
 
-async function fileToBase64(file: File | null | string): Promise<string | null> {
-  if (!file || typeof file === "string") return null;
+async function fileToBase64(file: File | null): Promise<string | null> {
+  if (!file || !(file instanceof File) || file.size === 0) return null;
   const bytes = await file.arrayBuffer();
   const base64 = Buffer.from(bytes).toString("base64");
   return `data:${file.type};base64,${base64}`;
 }
 
-async function imageValue(formData: FormData, fileKey: string, urlKey: string) {
-  const file = formData.get(fileKey);
+async function mainImage(formData: FormData) {
+  const file = formData.get("image_file");
   if (file instanceof File && file.size > 0) {
-    return await fileToBase64(file);
+    return fileToBase64(file);
   }
-  const url = text(formData, urlKey);
-  return nullableText(formData, urlKey);
+  return null;
 }
 
-async function imagesJson(formData: FormData, fileKey: string, urlKey: string) {
-  const files = formData.getAll(fileKey).filter(
+async function extraImages(formData: FormData) {
+  const files = formData.getAll("images_file").filter(
     (f): f is File => f instanceof File && f.size > 0,
   );
-  if (files.length > 0) {
-    const uris = await Promise.all(files.map((f) => fileToBase64(f)));
-    const valid = uris.filter((u): u is string => u !== null);
-    if (valid.length > 0) return JSON.stringify(valid);
-  }
-  return jsonArray(formData, urlKey);
+  if (files.length === 0) return "[]";
+  const uris = await Promise.all(files.map((f) => fileToBase64(f)));
+  const valid = uris.filter((u): u is string => u !== null);
+  return JSON.stringify(valid);
 }
 
 async function requireAdmin() {
@@ -88,8 +85,7 @@ function jsonArray(formData: FormData, key: string) {
 export async function createProduct(formData: FormData) {
   await requireAdmin();
 
-  const image = await imageValue(formData, "image_file", "image_url");
-  const images = await imagesJson(formData, "images_file", "images");
+  const image = await mainImage(formData);
 
   await db.query(
     `INSERT INTO products
@@ -102,7 +98,7 @@ export async function createProduct(formData: FormData) {
       nullableInt(formData, "compare_at_price"),
       nullableText(formData, "discount_label"),
       image,
-      images,
+      await extraImages(formData),
       jsonArray(formData, "sizes"),
       text(formData, "description"),
       text(formData, "material"),
@@ -120,16 +116,17 @@ export async function updateProduct(formData: FormData) {
   await requireAdmin();
 
   const productId = intValue(formData, "id");
-  const existing = await db.query<Product>(
-    "SELECT image_url, images FROM products WHERE id = $1",
-    [productId],
-  );
+  let image = await mainImage(formData);
 
-  const existingImage = existing.rows[0]?.image_url ?? "";
-  const existingImages = existing.rows[0]?.images ?? "[]";
+  if (!image) {
+    const existing = await db.query(
+      "SELECT image_url FROM products WHERE id = $1",
+      [productId],
+    );
+    image = existing.rows[0]?.image_url ?? null;
+  }
 
-  const image = (await imageValue(formData, "image_file", "image_url")) ?? existingImage;
-  const images = await imagesJson(formData, "images_file", "images");
+  const images = await extraImages(formData);
 
   await db.query(
     `UPDATE products
