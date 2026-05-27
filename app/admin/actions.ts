@@ -76,6 +76,10 @@ export async function logoutAction() {
   redirect("/admin");
 }
 
+function rethrowRedirect(e: any) {
+  if (e?.digest?.startsWith("NEXT_REDIRECT")) throw e;
+}
+
 function jsonArray(formData: FormData, key: string) {
   const raw = text(formData, key);
   if (!raw) return "[]";
@@ -117,6 +121,7 @@ export async function createProduct(formData: FormData) {
     revalidatePath("/");
     redirect("/admin?updated=Produk+berhasil+ditambahkan");
   } catch (e: any) {
+    rethrowRedirect(e);
     redirect(`/admin?error=${encodeURIComponent(e.message)}`);
   }
 }
@@ -183,6 +188,7 @@ export async function updateProduct(formData: FormData) {
     revalidatePath("/");
     redirect("/admin?updated=Produk+berhasil+diupdate");
   } catch (e: any) {
+    rethrowRedirect(e);
     redirect(`/admin?error=${encodeURIComponent(e.message)}`);
   }
 }
