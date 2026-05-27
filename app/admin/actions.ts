@@ -198,6 +198,19 @@ export async function deleteProduct(formData: FormData) {
 export async function updateBanner(formData: FormData) {
   await requireAdmin();
 
+  const file = formData.get("image_file");
+  let imageUrl: string | null = null;
+  if (file instanceof File && file.size > 0) {
+    imageUrl = await fileToBase64(file, "Gambar Banner");
+  }
+  if (!imageUrl) {
+    const existing = await db.query(
+      "SELECT image_url FROM banners WHERE id = $1",
+      [intValue(formData, "id")],
+    );
+    imageUrl = existing.rows[0]?.image_url ?? null;
+  }
+
   await db.query(
     `UPDATE banners
      SET title = $1,
@@ -210,7 +223,7 @@ export async function updateBanner(formData: FormData) {
     [
       text(formData, "title"),
       nullableText(formData, "subtitle"),
-      text(formData, "image_url"),
+      imageUrl,
       nullableText(formData, "cta_label"),
       nullableText(formData, "cta_href"),
       intValue(formData, "sort_order"),

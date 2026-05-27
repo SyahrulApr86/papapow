@@ -147,14 +147,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <form className="admin-form" action={updateBanner} key={banner.id}>
               <input name="id" type="hidden" value={banner.id} />
               <p className="eyebrow">{banner.placement}</p>
+              <img className="admin-banner-thumb" src={banner.image_url} alt="" />
               <Field label="Judul" name="title" defaultValue={banner.title} required />
               <Field label="Subtitle" name="subtitle" defaultValue={banner.subtitle} />
-              <Field
-                label="Gambar URL"
-                name="image_url"
-                defaultValue={banner.image_url}
-                required
-              />
+              <Field label="Upload Gambar Banner" name="image_file" type="file" />
               <Field label="CTA Label" name="cta_label" defaultValue={banner.cta_label} />
               <Field label="CTA Link" name="cta_href" defaultValue={banner.cta_href} />
               <Field
