@@ -176,7 +176,15 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           {products.map((product) => (
             <form className="admin-form product-form" action={updateProduct} key={product.id}>
               <input name="id" type="hidden" value={product.id} />
-              <img className="admin-thumb" src={product.image_url} alt="" />
+              <div className="admin-thumb-group">
+                <img className="admin-thumb" src={product.image_url} alt="" />
+                {product.images?.[0] ? (
+                  <div className="admin-hover-wrap">
+                    <img className="admin-thumb" src={product.images[0]} alt="hover" />
+                    <span>Hover</span>
+                  </div>
+                ) : null}
+              </div>
               <Field label="Nama" name="name" defaultValue={product.name} required />
               <Field label="Kategori" name="category" defaultValue={product.category} required />
               <Field label="Harga" name="price" type="number" defaultValue={product.price} required />

@@ -1271,7 +1271,34 @@ input {
   aspect-ratio: 1 / 1;
   background: var(--soft);
   border-radius: 6px;
+  width: 100%;
+}
+
+.product-form .admin-thumb-group {
+  display: grid;
+  gap: 8px;
   grid-row: span 3;
+  grid-template-columns: 1fr 1fr;
+  align-content: start;
+}
+
+.product-form .admin-hover-wrap {
+  display: grid;
+  gap: 4px;
+  position: relative;
+}
+
+.product-form .admin-hover-wrap span {
+  background: var(--ink);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  left: 4px;
+  padding: 2px 5px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 4px;
 }
 
 .login-panel {
