@@ -1,6 +1,7 @@
 import { getBanners, getProducts } from "@/lib/catalog";
 import { isAdmin } from "@/lib/admin-auth";
 import { PapapowLogo } from "@/components/papapow-logo";
+import { AdminSizePicker } from "@/components/admin-size-picker";
 import {
   createProduct,
   deleteProduct,
@@ -106,7 +107,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <Field label="Diskon" name="discount_label" />
           <Field label="Gambar URL" name="image_url" required />
           <Field label="Gambar Tambahan (JSON array URL)" name="images" />
-          <Field label="Ukuran (pisah koma)" name="sizes" defaultValue="S,M,L,XL,XXL" />
+          <AdminSizePicker />
           <Field label="Deskripsi" name="description" type="textarea" />
           <Field label="Material" name="material" type="textarea" />
           <Field label="Berat (gram)" name="weight" type="number" />
@@ -171,7 +172,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               <Field label="Diskon" name="discount_label" defaultValue={product.discount_label} />
               <Field label="Gambar URL" name="image_url" defaultValue={product.image_url} required />
               <Field label="Gambar Tambahan (JSON)" name="images" defaultValue={JSON.stringify(product.images)} />
-              <Field label="Ukuran (pisah koma)" name="sizes" defaultValue={product.sizes?.join(", ")} />
+              <AdminSizePicker defaultValue={product.sizes?.join(",")} />
               <Field label="Deskripsi" name="description" type="textarea" defaultValue={product.description} />
               <Field label="Material" name="material" type="textarea" defaultValue={product.material} />
               <Field label="Berat (gram)" name="weight" type="number" defaultValue={product.weight} />

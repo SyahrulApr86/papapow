@@ -405,6 +405,39 @@ input {
   justify-content: center;
 }
 
+.admin-size-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-size-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-size-btn {
+  background: none;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  height: 32px;
+  letter-spacing: 0.03em;
+  min-width: 44px;
+  padding: 0 10px;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+}
+
+.admin-size-btn.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
 .primary-cta,
 .bottom-banner a,
 .admin-button {
