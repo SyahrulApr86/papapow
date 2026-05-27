@@ -17,7 +17,7 @@ import {
 export const dynamic = "force-dynamic";
 
 type AdminPageProps = {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; updated?: string }>;
 };
 
 function Field({
@@ -53,7 +53,7 @@ function Field({
     return (
       <label>
         <span>{label}</span>
-        <input name={name} type="file" required={required} multiple={multiple} />
+        <input name={name} type="file" accept="image/*" required={required} multiple={multiple} />
       </label>
     );
   }
@@ -99,6 +99,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     <main className="admin-shell">
       <Suspense><AdminToast /></Suspense>
       <AdminScrollPreserver />
+      {error ? <strong className="form-error" style={{display:'block',marginBottom:16}}>{error}</strong> : null}
       <header className="admin-header">
         <div>
           <a className="brand-mark" href="/">
