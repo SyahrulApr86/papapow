@@ -45,18 +45,18 @@ export function SiteHeader({ products = [] }: { products?: Product[] }) {
 
         <nav className="header-actions" aria-label="Shop actions">
           <span className="currency-badge">IDR</span>
-          <a aria-label="Wishlist" href="#catalog" className="icon-btn">
+          <a aria-label="Wishlist" href="/account?tab=wishlist" className="icon-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </a>
-          <button aria-label="Cart" className="icon-btn" onClick={() => { closeAll(); setCartOpen(true); }}>
+          <a aria-label="Pesanan" href="/account?tab=pesanan" className="icon-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
-          </button>
+          </a>
           <a aria-label="Account" href="/account" className="icon-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>

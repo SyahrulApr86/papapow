@@ -1081,6 +1081,8 @@ input {
 }
 
 .account-tab {
+  background: none;
+  border: none;
   border-bottom: 2px solid transparent;
   color: var(--muted);
   cursor: pointer;
@@ -1090,6 +1092,7 @@ input {
   height: 48px;
   line-height: 48px;
   margin-bottom: -1px;
+  padding: 0;
   text-align: center;
   transition: color 0.15s;
 }

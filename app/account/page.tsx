@@ -1,6 +1,7 @@
 import { getUserSession } from "@/lib/user-auth";
 import { registerAction, loginAction, logoutAction } from "./actions";
 import { AccountTabs } from "./account-tabs";
+import { OrderTabs } from "./order-tabs";
 
 export const dynamic = "force-dynamic";
 
@@ -93,22 +94,7 @@ export default async function AccountPage({
               </form>
             </div>
 
-            <div className="account-orders-card">
-              <div className="account-tab-bar">
-                <span className="account-tab active">Pesanan</span>
-                <span className="account-tab">Wishlist</span>
-              </div>
-              <div className="account-empty-state">
-                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                  <line x1="12" y1="22.08" x2="12" y2="12"/>
-                </svg>
-                <p className="empty-state-title">Tidak ada pesanan</p>
-                <p className="empty-state-sub">Silakan buat pesanan untuk melihatnya disini.</p>
-                <a href="/#catalog" className="empty-state-cta">Belanja Sekarang</a>
-              </div>
-            </div>
+            <OrderTabs defaultTab={tab} />
           </>
         )}
       </div>
