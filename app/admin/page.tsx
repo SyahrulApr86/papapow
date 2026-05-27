@@ -5,6 +5,7 @@ import { PapapowLogo } from "@/components/papapow-logo";
 import { AdminSizePicker } from "@/components/admin-size-picker";
 import { AdminToast } from "@/components/admin-toast";
 import { AdminScrollPreserver } from "@/components/admin-scroll-preserver";
+import { AdminImageLightbox } from "@/components/admin-image-lightbox";
 import {
   createProduct,
   deleteProduct,
@@ -177,10 +178,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <form className="admin-form product-form" action={updateProduct} key={product.id}>
               <input name="id" type="hidden" value={product.id} />
               <div className="admin-thumb-group">
-                <img className="admin-thumb" src={product.image_url} alt="" />
+                <AdminImageLightbox src={product.image_url} alt={product.name} />
                 {product.images?.[0] ? (
                   <div className="admin-hover-wrap">
-                    <img className="admin-thumb" src={product.images[0]} alt="hover" />
+                    <AdminImageLightbox src={product.images[0]} alt={`${product.name} hover`} />
                     <span>Hover</span>
                   </div>
                 ) : null}
