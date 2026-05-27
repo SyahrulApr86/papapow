@@ -17,7 +17,7 @@ export async function registerAction(formData: FormData) {
 
   const result = await registerUser(email, name, password);
   if ("error" in result) {
-    redirect(`/account?error=${encodeURIComponent(result.error)}`);
+    redirect(`/account?error=${encodeURIComponent(result.error ?? "Terjadi kesalahan")}`);
   }
 
   await setUserSession(result.userId);
@@ -30,7 +30,7 @@ export async function loginAction(formData: FormData) {
 
   const result = await loginUser(email, password);
   if ("error" in result) {
-    redirect(`/account?error=${encodeURIComponent(result.error)}&tab=login`);
+    redirect(`/account?error=${encodeURIComponent(result.error ?? "Terjadi kesalahan")}&tab=login`);
   }
 
   await setUserSession(result.userId);
