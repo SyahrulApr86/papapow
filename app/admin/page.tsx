@@ -26,12 +26,14 @@ function Field({
   defaultValue,
   type = "text",
   required = false,
+  multiple = false,
 }: {
   label: string;
   name: string;
   defaultValue?: string | number | null;
   type?: string;
   required?: boolean;
+  multiple?: boolean;
 }) {
   if (type === "textarea") {
     return (
@@ -43,6 +45,15 @@ function Field({
           required={required}
           rows={3}
         />
+      </label>
+    );
+  }
+
+  if (type === "file") {
+    return (
+      <label>
+        <span>{label}</span>
+        <input name={name} type="file" required={required} multiple={multiple} />
       </label>
     );
   }
@@ -104,14 +115,16 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
       <section className="admin-section">
         <h2>Tambah Produk</h2>
-        <form className="admin-form product-form" action={createProduct}>
+        <form className="admin-form product-form" action={createProduct} encType="multipart/form-data">
           <Field label="Nama" name="name" required />
           <Field label="Kategori" name="category" required />
           <Field label="Harga" name="price" type="number" required />
           <Field label="Harga Coret" name="compare_at_price" type="number" />
           <Field label="Diskon" name="discount_label" />
-          <Field label="Gambar URL" name="image_url" required />
-          <Field label="Gambar Tambahan (JSON array URL)" name="images" />
+          <Field label="Upload Gambar Utama" name="image_file" type="file" required />
+          <Field label="— atau URL Gambar" name="image_url" />
+          <Field label="Upload Gambar Tambahan" name="images_file" type="file" multiple />
+          <Field label="— atau URL Gambar Tambahan (JSON)" name="images" />
           <AdminSizePicker />
           <Field label="Deskripsi" name="description" type="textarea" />
           <Field label="Material" name="material" type="textarea" />
@@ -162,7 +175,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <h2>Produk</h2>
         <div className="admin-list">
           {products.map((product) => (
-            <form className="admin-form product-form" action={updateProduct} key={product.id}>
+            <form className="admin-form product-form" action={updateProduct} key={product.id} encType="multipart/form-data">
               <input name="id" type="hidden" value={product.id} />
               <img className="admin-thumb" src={product.image_url} alt="" />
               <Field label="Nama" name="name" defaultValue={product.name} required />
@@ -175,8 +188,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 defaultValue={product.compare_at_price}
               />
               <Field label="Diskon" name="discount_label" defaultValue={product.discount_label} />
-              <Field label="Gambar URL" name="image_url" defaultValue={product.image_url} required />
-              <Field label="Gambar Tambahan (JSON)" name="images" defaultValue={JSON.stringify(product.images)} />
+              <Field label="Upload Gambar Baru" name="image_file" type="file" />
+              <Field label="— atau Gambar saat ini (URL)" name="image_url" defaultValue={product.image_url} />
+              <Field label="Upload Gambar Tambahan" name="images_file" type="file" multiple />
+              <Field label="— atau Gambar Tambahan (JSON)" name="images" defaultValue={JSON.stringify(product.images)} />
               <AdminSizePicker defaultValue={product.sizes?.join(",")} />
               <Field label="Deskripsi" name="description" type="textarea" defaultValue={product.description} />
               <Field label="Material" name="material" type="textarea" defaultValue={product.material} />
