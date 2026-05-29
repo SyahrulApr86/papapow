@@ -36,10 +36,10 @@ export default async function AccountPage({
               </div>
             </div>
 
-            {error && <p className="auth-error">{decodeURIComponent(error)}</p>}
+            {error && <p className="auth-error auth-error-center">{decodeURIComponent(error)}</p>}
 
             {/* Auth forms */}
-            <div className="auth-forms" id="auth-forms">
+            <div className="auth-container" id="auth-forms">
               <AccountTabs defaultTab={tab === "login" ? "login" : "register"}>
                 {/* Login form */}
                 <form action={loginAction} className="auth-form" data-tab="login">

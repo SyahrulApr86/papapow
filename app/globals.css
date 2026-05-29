@@ -913,6 +913,34 @@ input {
   max-width: 900px;
 }
 
+.auth-container {
+  margin: 0 auto;
+  max-width: 480px;
+}
+
+.auth-error-center {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 480px;
+}
+
+/* Guest account page: center everything */
+.account-shell:has(.auth-container) .account-title {
+  text-align: center;
+}
+
+.account-shell:has(.auth-container) .auth-banner {
+  flex-direction: column;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.account-shell:has(.auth-container) .auth-banner-actions {
+  justify-content: center;
+}
+
 .account-title {
   font-size: clamp(26px, 4vw, 36px);
   font-weight: 800;
