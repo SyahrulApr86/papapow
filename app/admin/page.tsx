@@ -1,10 +1,9 @@
 import { Suspense } from "react";
 import { getBanners, getProducts } from "@/lib/catalog";
 import { isAdmin } from "@/lib/admin-auth";
-import { AdminSizePicker } from "@/components/admin-size-picker";
 import { AdminToast } from "@/components/admin-toast";
 import { AdminScrollPreserver } from "@/components/admin-scroll-preserver";
-import { AdminImageLightbox } from "@/components/admin-image-lightbox";
+import { AdminProductForm } from "@/components/admin-product-form";
 import {
   createProduct,
   deleteProduct,
@@ -20,53 +19,28 @@ type AdminPageProps = {
   searchParams: Promise<{ error?: string; updated?: string }>;
 };
 
-function Field({
-  label,
-  name,
-  defaultValue,
-  type = "text",
-  required = false,
-  multiple = false,
-}: {
-  label: string;
-  name: string;
-  defaultValue?: string | number | null;
-  type?: string;
-  required?: boolean;
-  multiple?: boolean;
-}) {
-  if (type === "textarea") {
-    return (
-      <label>
-        <span>{label}</span>
-        <textarea
-          name={name}
-          defaultValue={defaultValue ?? ""}
-          required={required}
-          rows={3}
-        />
-      </label>
-    );
-  }
-
-  if (type === "file") {
-    return (
-      <label>
-        <span>{label}</span>
-        <input name={name} type="file" accept="image/*" required={required} multiple={multiple} />
-      </label>
-    );
-  }
-
+function LoginField({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
   return (
-    <label>
-      <span>{label}</span>
-      <input
-        name={name}
-        type={type}
-        defaultValue={defaultValue ?? ""}
-        required={required}
-      />
+    <label className="field">
+      <span className="field-label">{label}</span>
+      <input name={name} type={type} required />
+    </label>
+  );
+}
+
+function BannerField({ label, name, defaultValue, type = "text" }: {
+  label: string; name: string; defaultValue?: string | number | null; type?: string;
+}) {
+  if (type === "file") return (
+    <label className="field">
+      <span className="field-label">{label}</span>
+      <input name={name} type="file" accept="image/*" />
+    </label>
+  );
+  return (
+    <label className="field">
+      <span className="field-label">{label}</span>
+      <input name={name} type={type} defaultValue={defaultValue ?? ""} />
     </label>
   );
 }
@@ -84,10 +58,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <h1>Admin Panel</h1>
           <p>Masuk untuk kelola produk dan banner katalog.</p>
           {error ? <strong className="form-error">Password salah.</strong> : null}
-          <Field label="Password" name="password" type="password" required />
-          <button className="admin-button" type="submit">
-            Masuk
-          </button>
+          <LoginField label="Password" name="password" type="password" />
+          <button className="admin-button" type="submit">Masuk</button>
         </form>
       </main>
     );
@@ -148,28 +120,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </div>
           <div className="admin-card">
             <div className="admin-card-body">
-        <form className="admin-form product-form" action={createProduct}>
-          <Field label="Nama" name="name" required />
-          <Field label="Kategori" name="category" required />
-          <Field label="Harga" name="price" type="number" required />
-          <Field label="Harga Coret" name="compare_at_price" type="number" />
-          <Field label="Diskon" name="discount_label" />
-          <Field label="Gambar Utama" name="main_image_file" type="file" required />
-          <Field label="Gambar Hover (opsional)" name="hover_image_file" type="file" />
-          <Field label="Gambar Tambahan (bisa banyak)" name="extra_images_file" type="file" multiple />
-          <AdminSizePicker />
-          <Field label="Deskripsi" name="description" type="textarea" />
-          <Field label="Material" name="material" type="textarea" />
-          <Field label="Berat (gram)" name="weight" type="number" />
-          <Field label="Urutan" name="sort_order" type="number" defaultValue={0} />
-          <label className="check-field">
-            <input name="is_featured" type="checkbox" defaultChecked />
-            <span>Tampil di homepage</span>
-          </label>
-          <button className="admin-button" type="submit">
-            Simpan Produk
-          </button>
-        </form>
+              <AdminProductForm action={createProduct} submitLabel="Simpan Produk" />
             </div>
           </div>
         </section>
@@ -188,13 +139,13 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 <div className="admin-card-body">
                   <form className="admin-form" action={updateBanner}>
                     <input name="id" type="hidden" value={banner.id} />
+                    <input name="sort_order" type="hidden" value={banner.sort_order} />
                     <img className="admin-banner-thumb" src={banner.image_url} alt="" />
-                    <Field label="Judul" name="title" defaultValue={banner.title} required />
-                    <Field label="Subtitle" name="subtitle" defaultValue={banner.subtitle} />
-                    <Field label="Upload Gambar Banner" name="image_file" type="file" />
-                    <Field label="CTA Label" name="cta_label" defaultValue={banner.cta_label} />
-                    <Field label="CTA Link" name="cta_href" defaultValue={banner.cta_href} />
-                    <Field label="Urutan" name="sort_order" type="number" defaultValue={banner.sort_order} />
+                    <BannerField label="Judul" name="title" defaultValue={banner.title} />
+                    <BannerField label="Subtitle" name="subtitle" defaultValue={banner.subtitle} />
+                    <BannerField label="Upload Gambar Banner" name="image_file" type="file" />
+                    <BannerField label="CTA Label" name="cta_label" defaultValue={banner.cta_label} />
+                    <BannerField label="CTA Link" name="cta_href" defaultValue={banner.cta_href} />
                     <button className="admin-button" type="submit">Update Banner</button>
                   </form>
                 </div>
@@ -226,48 +177,30 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   </span>
                 </div>
                 <div className="admin-card-body">
-                  <form className="admin-form product-form" action={updateProduct}>
-                    <input name="id" type="hidden" value={product.id} />
-                    <div className="admin-thumb-group">
-                      <div className="admin-hover-wrap">
-                        <AdminImageLightbox src={product.main_image} alt={`${product.name} utama`} />
-                        <span>Utama</span>
-                      </div>
-                      {product.hover_image && (
-                        <div className="admin-hover-wrap">
-                          <AdminImageLightbox src={product.hover_image} alt={`${product.name} hover`} />
-                          <span>Hover</span>
-                        </div>
-                      )}
-                      {product.extra_images.map((url, i) => (
-                        <div key={i} className="admin-hover-wrap">
-                          <AdminImageLightbox src={url} alt={`${product.name} +${i + 1}`} />
-                          <span>+{i + 1}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <Field label="Nama" name="name" defaultValue={product.name} required />
-                    <Field label="Kategori" name="category" defaultValue={product.category} required />
-                    <Field label="Harga" name="price" type="number" defaultValue={product.price} required />
-                    <Field label="Harga Coret" name="compare_at_price" type="number" defaultValue={product.compare_at_price} />
-                    <Field label="Diskon" name="discount_label" defaultValue={product.discount_label} />
-                    <Field label="Ganti Gambar Utama" name="main_image_file" type="file" />
-                    <Field label="Ganti Gambar Hover" name="hover_image_file" type="file" />
-                    <Field label="Ganti Gambar Tambahan" name="extra_images_file" type="file" multiple />
-                    <AdminSizePicker defaultValue={product.sizes?.join(",")} />
-                    <Field label="Deskripsi" name="description" type="textarea" defaultValue={product.description} />
-                    <Field label="Material" name="material" type="textarea" defaultValue={product.material} />
-                    <Field label="Berat (gram)" name="weight" type="number" defaultValue={product.weight} />
-                    <Field label="Urutan" name="sort_order" type="number" defaultValue={product.sort_order} />
-                    <label className="check-field">
-                      <input name="is_featured" type="checkbox" defaultChecked={product.is_featured} />
-                      <span>Tampil di homepage</span>
-                    </label>
-                    <div className="form-actions">
-                      <button className="admin-button" type="submit">Update</button>
-                      <button className="admin-button danger" formAction={deleteProduct} type="submit">Hapus</button>
-                    </div>
-                  </form>
+                  <AdminProductForm
+                    action={updateProduct}
+                    deleteAction={deleteProduct}
+                    productId={product.id}
+                    submitLabel="Update Produk"
+                    images={{
+                      mainImage: product.main_image,
+                      hoverImage: product.hover_image,
+                      extraImages: product.extra_images,
+                    }}
+                    defaultValues={{
+                      name: product.name,
+                      category: product.category,
+                      price: product.price,
+                      compare_at_price: product.compare_at_price,
+                      discount_label: product.discount_label,
+                      description: product.description,
+                      material: product.material,
+                      weight: product.weight,
+                      sort_order: product.sort_order,
+                      is_featured: product.is_featured,
+                      sizes: product.sizes,
+                    }}
+                  />
                 </div>
               </div>
             ))}
