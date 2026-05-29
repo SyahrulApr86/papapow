@@ -43,28 +43,11 @@ async function uploadFile(file: FormDataEntryValue | null, label: string): Promi
 
 async function uploadFiles(files: FormDataEntryValue[], label: string): Promise<string[]> {
   const results = await Promise.all(
-    files.filter((f): f is File => f instanceof File && f.size > 0)
-         .map(f => fileToBase64(f, label))
+    files
+      .filter((f): f is File => f instanceof File && f.size > 0)
+      .map((f) => fileToBase64(f, label)),
   );
   return results.filter((u): u is string => u !== null);
-}
-
-/** Build images array: [main, hover?, ...extras] */
-async function buildImages(
-  formData: FormData,
-  existing: string[] = [],
-): Promise<string[]> {
-  const main  = await uploadFile(formData.get("main_image_file"),  "Gambar Utama");
-  const hover = await uploadFile(formData.get("hover_image_file"), "Gambar Hover");
-  const extras = await uploadFiles(formData.getAll("extra_images_file"), "Gambar Tambahan");
-
-  const result: string[] = [
-    main  ?? existing[0] ?? "",
-    hover ?? existing[1] ?? "",
-    ...(extras.length > 0 ? extras : existing.slice(2)),
-  ].filter(Boolean);
-
-  return result;
 }
 
 async function requireAdmin() {
@@ -78,7 +61,6 @@ export async function loginAction(formData: FormData) {
   if (!ok) {
     redirect("/admin?error=1");
   }
-
   redirect("/admin");
 }
 
@@ -98,7 +80,12 @@ function jsonArray(formData: FormData, key: string) {
     JSON.parse(raw);
     return raw;
   } catch {
-    return JSON.stringify(raw.split(",").map((s) => s.trim()).filter(Boolean));
+    return JSON.stringify(
+      raw
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    );
   }
 }
 
@@ -106,29 +93,46 @@ export async function createProduct(formData: FormData) {
   await requireAdmin();
 
   try {
-    const images = await buildImages(formData);
-    const imageUrl = images[0] ?? "";
+    const mainImage  = await uploadFile(formData.get("main_image_file"),  "Gambar Utama") ?? "";
+    const hoverImage = await uploadFile(formData.get("hover_image_file"), "Gambar Hover");
+    const extraImages = await uploadFiles(formData.getAll("extra_images_file"), "Gambar Tambahan");
 
-    await db.query(
+    const { rows } = await db.query(
       `INSERT INTO products
-        (name, category, price, compare_at_price, discount_label, image_url, images, sizes, description, material, weight, is_featured, sort_order)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+        (name, category, price, compare_at_price, discount_label,
+         image_url, main_image, hover_image,
+         sizes, description, material, weight, is_featured, sort_order)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+       RETURNING id`,
       [
         text(formData, "name"),
         text(formData, "category"),
         intValue(formData, "price"),
         nullableInt(formData, "compare_at_price"),
         nullableText(formData, "discount_label"),
-        imageUrl,
-        JSON.stringify(images),
+        mainImage,
+        mainImage,
+        hoverImage,
         jsonArray(formData, "sizes"),
-        text(formData, "description"),
-        text(formData, "material"),
-        intValue(formData, "weight"),
+        nullableText(formData, "description"),
+        nullableText(formData, "material"),
+        nullableInt(formData, "weight") ?? 0,
         formData.get("is_featured") === "on",
         intValue(formData, "sort_order"),
       ],
     );
+
+    const productId = rows[0].id;
+    if (extraImages.length > 0) {
+      await Promise.all(
+        extraImages.map((url, i) =>
+          db.query(
+            "INSERT INTO product_images (product_id, image_url, sort_order) VALUES ($1,$2,$3)",
+            [productId, url, i],
+          ),
+        ),
+      );
+    }
 
     revalidatePath("/");
     redirect("/admin?updated=Produk+berhasil+ditambahkan");
@@ -144,42 +148,56 @@ export async function updateProduct(formData: FormData) {
   try {
     const productId = intValue(formData, "id");
 
-    const existing = await db.query<{ images: string[] }>(
-      "SELECT images FROM products WHERE id = $1",
+    // Fetch existing images to fall back to if no new file uploaded
+    const existing = await db.query<{ main_image: string; hover_image: string | null }>(
+      "SELECT main_image, hover_image FROM products WHERE id = $1",
       [productId],
     );
-    const existingImages: string[] =
-      typeof existing.rows[0]?.images === "string"
-        ? JSON.parse(existing.rows[0].images)
-        : existing.rows[0]?.images ?? [];
+    const existingMain  = existing.rows[0]?.main_image  ?? "";
+    const existingHover = existing.rows[0]?.hover_image ?? null;
 
-    const images = await buildImages(formData, existingImages);
-    const imageUrl = images[0] ?? "";
+    const mainImage  = (await uploadFile(formData.get("main_image_file"),  "Gambar Utama"))  ?? existingMain;
+    const hoverImage = (await uploadFile(formData.get("hover_image_file"), "Gambar Hover")) ?? existingHover;
+    const newExtras  = await uploadFiles(formData.getAll("extra_images_file"), "Gambar Tambahan");
 
     await db.query(
       `UPDATE products
-       SET name = $1, category = $2, price = $3, compare_at_price = $4,
-           discount_label = $5, image_url = $6, images = $7,
-           sizes = $8, description = $9, material = $10, weight = $11,
-           is_featured = $12, sort_order = $13
-       WHERE id = $14`,
+       SET name=$1, category=$2, price=$3, compare_at_price=$4,
+           discount_label=$5, image_url=$6, main_image=$7, hover_image=$8,
+           sizes=$9, description=$10, material=$11, weight=$12,
+           is_featured=$13, sort_order=$14
+       WHERE id=$15`,
       [
         text(formData, "name"),
         text(formData, "category"),
         intValue(formData, "price"),
         nullableInt(formData, "compare_at_price"),
         nullableText(formData, "discount_label"),
-        imageUrl,
-        JSON.stringify(images),
+        mainImage,
+        mainImage,
+        hoverImage,
         jsonArray(formData, "sizes"),
-        text(formData, "description"),
-        text(formData, "material"),
-        intValue(formData, "weight"),
+        nullableText(formData, "description"),
+        nullableText(formData, "material"),
+        nullableInt(formData, "weight") ?? 0,
         formData.get("is_featured") === "on",
         intValue(formData, "sort_order"),
         productId,
       ],
     );
+
+    // Replace extra gallery only if new files uploaded
+    if (newExtras.length > 0) {
+      await db.query("DELETE FROM product_images WHERE product_id = $1", [productId]);
+      await Promise.all(
+        newExtras.map((url, i) =>
+          db.query(
+            "INSERT INTO product_images (product_id, image_url, sort_order) VALUES ($1,$2,$3)",
+            [productId, url, i],
+          ),
+        ),
+      );
+    }
 
     revalidatePath("/");
     redirect("/admin?updated=Produk+berhasil+diupdate");
@@ -192,7 +210,9 @@ export async function updateProduct(formData: FormData) {
 export async function deleteProduct(formData: FormData) {
   await requireAdmin();
 
-  await db.query("DELETE FROM products WHERE id = $1", [intValue(formData, "id")]);
+  const productId = intValue(formData, "id");
+  // product_images auto-deleted via ON DELETE CASCADE
+  await db.query("DELETE FROM products WHERE id = $1", [productId]);
   revalidatePath("/");
   redirect("/admin?updated=Produk+berhasil+dihapus");
 }
@@ -215,13 +235,8 @@ export async function updateBanner(formData: FormData) {
 
   await db.query(
     `UPDATE banners
-     SET title = $1,
-         subtitle = $2,
-         image_url = $3,
-         cta_label = $4,
-         cta_href = $5,
-         sort_order = $6
-     WHERE id = $7`,
+     SET title=$1, subtitle=$2, image_url=$3, cta_label=$4, cta_href=$5, sort_order=$6
+     WHERE id=$7`,
     [
       text(formData, "title"),
       nullableText(formData, "subtitle"),

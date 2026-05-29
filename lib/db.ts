@@ -25,12 +25,18 @@ export type Product = {
   price: number;
   compare_at_price: number | null;
   discount_label: string | null;
+  /** Kept for backward compat — always mirrors main_image */
   image_url: string;
+  main_image: string;
+  hover_image: string | null;
+  /** Extra gallery images from product_images table */
+  extra_images: string[];
+  /** Computed: [main_image, hover_image, ...extra_images] */
   images: string[];
   sizes: string[];
-  description: string;
-  material: string;
-  weight: number;
+  description: string | null;
+  material: string | null;
+  weight: number | null;
   is_featured: boolean;
   sort_order: number;
 };
