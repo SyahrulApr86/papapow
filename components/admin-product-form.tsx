@@ -16,12 +16,15 @@ function ImageBox({
   label: string;
   required?: boolean;
   multiple?: boolean;
-  existing?: string | null;
+  existing?: string | string[] | null;
 }) {
+  const initials = Array.isArray(existing)
+    ? existing.filter(Boolean)
+    : existing
+    ? [existing]
+    : [];
   const inputRef = useRef<HTMLInputElement>(null);
-  const [previews, setPreviews] = useState<string[]>(
-    existing ? [existing] : [],
-  );
+  const [previews, setPreviews] = useState<string[]>(initials);
   const hasImage = previews.length > 0;
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -45,7 +48,7 @@ function ImageBox({
       </p>
       <button
         type="button"
-        className={`img-upload-zone${hasImage ? " has-image" : ""}`}
+        className={`img-upload-zone${hasImage ? " has-image" : ""}${multiple ? " multi-zone" : ""}`}
         onClick={() => inputRef.current?.click()}
       >
         {hasImage ? (
@@ -225,7 +228,7 @@ export function AdminProductForm({
           name="extra_images_file"
           label="Galeri Tambahan"
           multiple
-          existing={images?.extraImages?.[0]}
+          existing={images?.extraImages ?? []}
         />
       </FormSection>
 
