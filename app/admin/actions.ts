@@ -61,7 +61,7 @@ export async function loginAction(formData: FormData) {
   if (!ok) {
     redirect("/admin?error=1");
   }
-  redirect("/admin");
+  redirect("/admin/products");
 }
 
 export async function logoutAction() {
@@ -135,10 +135,10 @@ export async function createProduct(formData: FormData) {
     }
 
     revalidatePath("/");
-    redirect("/admin?updated=Produk+berhasil+ditambahkan");
+    redirect("/admin/products?updated=Produk+berhasil+ditambahkan");
   } catch (e: any) {
     rethrowRedirect(e);
-    redirect(`/admin?error=${encodeURIComponent(e.message)}`);
+    redirect(`/admin/products/new?error=${encodeURIComponent(e.message)}`);
   }
 }
 
@@ -200,10 +200,10 @@ export async function updateProduct(formData: FormData) {
     }
 
     revalidatePath("/");
-    redirect("/admin?updated=Produk+berhasil+diupdate");
+    redirect("/admin/products?updated=Produk+berhasil+diupdate");
   } catch (e: any) {
     rethrowRedirect(e);
-    redirect(`/admin?error=${encodeURIComponent(e.message)}`);
+    redirect(`/admin/products?error=${encodeURIComponent(e.message)}`);
   }
 }
 
@@ -214,7 +214,7 @@ export async function deleteProduct(formData: FormData) {
   // product_images auto-deleted via ON DELETE CASCADE
   await db.query("DELETE FROM products WHERE id = $1", [productId]);
   revalidatePath("/");
-  redirect("/admin?updated=Produk+berhasil+dihapus");
+  redirect("/admin/products?updated=Produk+berhasil+dihapus");
 }
 
 export async function updateBanner(formData: FormData) {
@@ -249,5 +249,5 @@ export async function updateBanner(formData: FormData) {
   );
 
   revalidatePath("/");
-  redirect("/admin?updated=Banner+berhasil+diupdate");
+  redirect("/admin/banners?updated=Banner+berhasil+diupdate");
 }
