@@ -39,7 +39,7 @@ export function SiteHeader({ products = [] }: { products?: Product[] }) {
         </div>
 
         <a className="brand-mark" href="/">
-          <img src="/images/logo-white.jpg" alt="PAPAPOW" className="brand-logo-img" />
+          <img src="/images/logo-black.png" alt="PAPAPOW" className="brand-logo-img" />
         </a>
 
         <nav className="header-actions" aria-label="Shop actions">
