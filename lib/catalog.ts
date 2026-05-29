@@ -5,10 +5,14 @@ const productColumns = `id, name, category, price, compare_at_price,
   is_featured, sort_order`;
 
 function parseProduct(row: any): Product {
+  const images = typeof row.images === "string" ? JSON.parse(row.images) : row.images ?? [];
+  const sizes = typeof row.sizes === "string" ? JSON.parse(row.sizes) : row.sizes ?? [];
   return {
     ...row,
-    images: typeof row.images === "string" ? JSON.parse(row.images) : row.images ?? [],
-    sizes: typeof row.sizes === "string" ? JSON.parse(row.sizes) : row.sizes ?? [],
+    images,
+    sizes,
+    // image_url always mirrors images[0] — single source of truth is images array
+    image_url: images[0] ?? row.image_url ?? "",
   };
 }
 

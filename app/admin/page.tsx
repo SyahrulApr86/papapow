@@ -123,8 +123,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <Field label="Harga" name="price" type="number" required />
           <Field label="Harga Coret" name="compare_at_price" type="number" />
           <Field label="Diskon" name="discount_label" />
-          <Field label="Upload Gambar Utama" name="image_file" type="file" required />
-          <Field label="Upload Gambar Tambahan" name="images_file" type="file" multiple />
+          <Field label="Gambar Utama" name="main_image_file" type="file" required />
+          <Field label="Gambar Hover (opsional)" name="hover_image_file" type="file" />
+          <Field label="Gambar Tambahan (bisa banyak)" name="extra_images_file" type="file" multiple />
           <AdminSizePicker />
           <Field label="Deskripsi" name="description" type="textarea" />
           <Field label="Material" name="material" type="textarea" />
@@ -174,13 +175,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <form className="admin-form product-form" action={updateProduct} key={product.id}>
               <input name="id" type="hidden" value={product.id} />
               <div className="admin-thumb-group">
-                <AdminImageLightbox src={product.image_url} alt={product.name} />
-                {product.images?.[0] ? (
-                  <div className="admin-hover-wrap">
-                    <AdminImageLightbox src={product.images[0]} alt={`${product.name} hover`} />
-                    <span>Hover</span>
+                {product.images.map((url, i) => (
+                  <div key={i} className="admin-hover-wrap">
+                    <AdminImageLightbox src={url} alt={`${product.name} ${i}`} />
+                    <span>{i === 0 ? "Utama" : i === 1 ? "Hover" : `+${i - 1}`}</span>
                   </div>
-                ) : null}
+                ))}
               </div>
               <Field label="Nama" name="name" defaultValue={product.name} required />
               <Field label="Kategori" name="category" defaultValue={product.category} required />
@@ -192,8 +192,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 defaultValue={product.compare_at_price}
               />
               <Field label="Diskon" name="discount_label" defaultValue={product.discount_label} />
-              <Field label="Upload Gambar Baru" name="image_file" type="file" />
-              <Field label="Upload Gambar Tambahan" name="images_file" type="file" multiple />
+              <Field label="Ganti Gambar Utama" name="main_image_file" type="file" />
+              <Field label="Ganti Gambar Hover" name="hover_image_file" type="file" />
+              <Field label="Ganti Gambar Tambahan (bisa banyak)" name="extra_images_file" type="file" multiple />
               <AdminSizePicker defaultValue={product.sizes?.join(",")} />
               <Field label="Deskripsi" name="description" type="textarea" defaultValue={product.description} />
               <Field label="Material" name="material" type="textarea" defaultValue={product.material} />

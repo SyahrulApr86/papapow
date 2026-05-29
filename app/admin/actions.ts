@@ -36,24 +36,35 @@ async function fileToBase64(file: File | null, label = "Gambar"): Promise<string
   return `data:${file.type};base64,${base64}`;
 }
 
-async function mainImage(formData: FormData) {
-  const file = formData.get("image_file");
-  if (file instanceof File && file.size > 0) {
-    return fileToBase64(file, "Gambar Utama");
-  }
+async function uploadFile(file: FormDataEntryValue | null, label: string): Promise<string | null> {
+  if (file instanceof File && file.size > 0) return fileToBase64(file, label);
   return null;
 }
 
-async function extraImages(formData: FormData) {
-  const files = formData.getAll("images_file").filter(
-    (f): f is File => f instanceof File && f.size > 0,
+async function uploadFiles(files: FormDataEntryValue[], label: string): Promise<string[]> {
+  const results = await Promise.all(
+    files.filter((f): f is File => f instanceof File && f.size > 0)
+         .map(f => fileToBase64(f, label))
   );
-  if (files.length === 0) return "[]";
-  const uris = await Promise.all(
-    files.map((f) => fileToBase64(f, "Gambar Tambahan")),
-  );
-  const valid = uris.filter((u): u is string => u !== null);
-  return JSON.stringify(valid);
+  return results.filter((u): u is string => u !== null);
+}
+
+/** Build images array: [main, hover?, ...extras] */
+async function buildImages(
+  formData: FormData,
+  existing: string[] = [],
+): Promise<string[]> {
+  const main  = await uploadFile(formData.get("main_image_file"),  "Gambar Utama");
+  const hover = await uploadFile(formData.get("hover_image_file"), "Gambar Hover");
+  const extras = await uploadFiles(formData.getAll("extra_images_file"), "Gambar Tambahan");
+
+  const result: string[] = [
+    main  ?? existing[0] ?? "",
+    hover ?? existing[1] ?? "",
+    ...(extras.length > 0 ? extras : existing.slice(2)),
+  ].filter(Boolean);
+
+  return result;
 }
 
 async function requireAdmin() {
@@ -95,7 +106,8 @@ export async function createProduct(formData: FormData) {
   await requireAdmin();
 
   try {
-    const image = await mainImage(formData);
+    const images = await buildImages(formData);
+    const imageUrl = images[0] ?? "";
 
     await db.query(
       `INSERT INTO products
@@ -107,8 +119,8 @@ export async function createProduct(formData: FormData) {
         intValue(formData, "price"),
         nullableInt(formData, "compare_at_price"),
         nullableText(formData, "discount_label"),
-        image,
-        await extraImages(formData),
+        imageUrl,
+        JSON.stringify(images),
         jsonArray(formData, "sizes"),
         text(formData, "description"),
         text(formData, "material"),
@@ -131,59 +143,43 @@ export async function updateProduct(formData: FormData) {
 
   try {
     const productId = intValue(formData, "id");
-    let image = await mainImage(formData);
 
-    const existing = await db.query(
-      "SELECT image_url, images FROM products WHERE id = $1",
+    const existing = await db.query<{ images: string[] }>(
+      "SELECT images FROM products WHERE id = $1",
       [productId],
     );
-    if (!image) {
-      image = existing.rows[0]?.image_url ?? null;
-    }
+    const existingImages: string[] =
+      typeof existing.rows[0]?.images === "string"
+        ? JSON.parse(existing.rows[0].images)
+        : existing.rows[0]?.images ?? [];
 
-    const newFiles = formData.getAll("images_file").filter(
-      (f): f is File => f instanceof File && f.size > 0,
+    const images = await buildImages(formData, existingImages);
+    const imageUrl = images[0] ?? "";
+
+    await db.query(
+      `UPDATE products
+       SET name = $1, category = $2, price = $3, compare_at_price = $4,
+           discount_label = $5, image_url = $6, images = $7,
+           sizes = $8, description = $9, material = $10, weight = $11,
+           is_featured = $12, sort_order = $13
+       WHERE id = $14`,
+      [
+        text(formData, "name"),
+        text(formData, "category"),
+        intValue(formData, "price"),
+        nullableInt(formData, "compare_at_price"),
+        nullableText(formData, "discount_label"),
+        imageUrl,
+        JSON.stringify(images),
+        jsonArray(formData, "sizes"),
+        text(formData, "description"),
+        text(formData, "material"),
+        intValue(formData, "weight"),
+        formData.get("is_featured") === "on",
+        intValue(formData, "sort_order"),
+        productId,
+      ],
     );
-
-    const common = [
-      text(formData, "name"),
-      text(formData, "category"),
-      intValue(formData, "price"),
-      nullableInt(formData, "compare_at_price"),
-      nullableText(formData, "discount_label"),
-      image,
-      jsonArray(formData, "sizes"),
-      text(formData, "description"),
-      text(formData, "material"),
-      intValue(formData, "weight"),
-      formData.get("is_featured") === "on",
-      intValue(formData, "sort_order"),
-      productId,
-    ];
-
-    if (newFiles.length > 0) {
-      const images = await extraImages(formData);
-      common.splice(6, 0, images);
-      await db.query(
-        `UPDATE products
-         SET name = $1, category = $2, price = $3, compare_at_price = $4,
-             discount_label = $5, image_url = $6, images = $7,
-             sizes = $8, description = $9, material = $10, weight = $11,
-             is_featured = $12, sort_order = $13
-         WHERE id = $14`,
-        common,
-      );
-    } else {
-      await db.query(
-        `UPDATE products
-         SET name = $1, category = $2, price = $3, compare_at_price = $4,
-             discount_label = $5, image_url = $6,
-             sizes = $7, description = $8, material = $9, weight = $10,
-             is_featured = $11, sort_order = $12
-         WHERE id = $13`,
-        common,
-      );
-    }
 
     revalidatePath("/");
     redirect("/admin?updated=Produk+berhasil+diupdate");
