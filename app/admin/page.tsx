@@ -174,10 +174,20 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <form className="admin-form product-form" action={updateProduct} key={product.id}>
               <input name="id" type="hidden" value={product.id} />
               <div className="admin-thumb-group">
-                {product.images.map((url, i) => (
+                <div className="admin-hover-wrap">
+                  <AdminImageLightbox src={product.main_image} alt={`${product.name} utama`} />
+                  <span>Utama</span>
+                </div>
+                {product.hover_image && (
+                  <div className="admin-hover-wrap">
+                    <AdminImageLightbox src={product.hover_image} alt={`${product.name} hover`} />
+                    <span>Hover</span>
+                  </div>
+                )}
+                {product.extra_images.map((url, i) => (
                   <div key={i} className="admin-hover-wrap">
-                    <AdminImageLightbox src={url} alt={`${product.name} ${i}`} />
-                    <span>{i === 0 ? "Utama" : i === 1 ? "Hover" : `+${i - 1}`}</span>
+                    <AdminImageLightbox src={url} alt={`${product.name} +${i + 1}`} />
+                    <span>+{i + 1}</span>
                   </div>
                 ))}
               </div>

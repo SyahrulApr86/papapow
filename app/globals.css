@@ -63,7 +63,9 @@ input {
   background: transparent;
   border-color: transparent;
   grid-column: 2;
+  height: 56px;
   justify-self: center;
+  width: 200px;
 }
 
 .site-header .brand-logo-img {
@@ -256,12 +258,13 @@ input {
 
 .hero {
   align-items: flex-end;
-  background-position: center;
+  aspect-ratio: 3 / 4;
+  background-position: center top;
   background-size: cover;
   display: flex;
-  min-height: calc(100vh - 56px);
   padding: clamp(24px, 4vw, 64px);
   position: relative;
+  width: 100%;
 }
 
 .hero::before,
@@ -280,9 +283,11 @@ input {
   z-index: 1;
 }
 
-.hero-copy .papapow-logo {
+.hero-logo {
+  display: block;
   filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55));
   margin-bottom: 18px;
+  width: 220px;
 }
 
 .hero-copy p,
@@ -311,7 +316,8 @@ input {
 .product-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+  justify-content: center;
   margin: 0 auto;
   max-width: 1280px;
 }

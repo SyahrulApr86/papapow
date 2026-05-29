@@ -2,7 +2,7 @@ import { db, type Banner, type Product } from "@/lib/db";
 
 const productColumns = `
   p.id, p.name, p.category, p.price, p.compare_at_price,
-  p.discount_label, p.image_url, p.main_image, p.hover_image,
+  p.discount_label, p.main_image, p.hover_image,
   p.sizes, p.description, p.material, p.weight,
   p.is_featured, p.sort_order,
   COALESCE(
@@ -20,18 +20,10 @@ function parseProduct(row: any): Product {
       ? JSON.parse(row.extra_images_json)
       : row.extra_images_json ?? [];
 
-  const images = [
-    row.main_image,
-    row.hover_image,
-    ...extraImages,
-  ].filter((u): u is string => Boolean(u));
-
   return {
     ...row,
     sizes,
     extra_images: extraImages,
-    images,
-    image_url: row.main_image || row.image_url || "",
   };
 }
 

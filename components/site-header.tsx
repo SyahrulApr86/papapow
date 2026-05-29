@@ -190,7 +190,7 @@ export function SiteHeader({ products = [] }: { products?: Product[] }) {
                   onClick={() => setCartOpen(false)}
                 >
                   <div className="cart-suggestion-img">
-                    <img src={p.image_url} alt={p.name} />
+                    <img src={p.main_image} alt={p.name} />
                     <button
                       aria-label="Tambah ke keranjang"
                       className="cart-suggestion-add"

@@ -30,7 +30,7 @@ export function AddToCartModal({
 
         <a className="atc-product-row" href={`/products/${product.id}`}>
           <div className="atc-product-img">
-            <img src={product.image_url} alt={product.name} />
+            <img src={product.main_image} alt={product.name} />
           </div>
           <span className="atc-product-name">{product.name}</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="atc-product-arrow">

@@ -1,5 +1,4 @@
 import { getBanners, getFeaturedProducts } from "@/lib/catalog";
-import { PapapowLogo } from "@/components/papapow-logo";
 import { SiteHeader } from "@/components/site-header";
 import { CatalogGrid } from "@/components/catalog-grid";
 
@@ -19,7 +18,7 @@ export default async function Home() {
 
       <section className="hero" style={{ backgroundImage: `url(${hero?.image_url})` }}>
         <div className="hero-copy">
-          <PapapowLogo />
+          <img src="/images/logo-white.jpg" alt="PAPAPOW" className="hero-logo" />
         </div>
       </section>
 

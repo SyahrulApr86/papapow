@@ -12,7 +12,11 @@ export function ProductDetail({
   product: Product;
   related: Product[];
 }) {
-  const allImages = product.images?.length ? product.images : [product.image_url];
+  const allImages = [
+    product.main_image,
+    product.hover_image,
+    ...product.extra_images,
+  ].filter(Boolean) as string[];
   const [activeImg, setActiveImg] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes?.[0] ?? "");
   const [qty, setQty] = useState(1);
@@ -168,7 +172,7 @@ export function ProductDetail({
             {related.map(p => (
               <a key={p.id} className="detail-related-card" href={`/products/${p.id}`}>
                 <div className="detail-related-img">
-                  <img src={p.image_url} alt={p.name} />
+                  <img src={p.main_image} alt={p.name} />
                 </div>
                 <p className="detail-related-name">{p.name}</p>
                 <div className="detail-related-price">
