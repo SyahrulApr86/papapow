@@ -73,7 +73,7 @@ function ImageBox({
           </div>
         )}
         {hasImage && (
-          <div className="img-upload-overlay">
+          <div className={multiple ? "img-upload-overlay-badge" : "img-upload-overlay"}>
             <span>Ganti gambar</span>
           </div>
         )}
