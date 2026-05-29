@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { getBanners, getProducts } from "@/lib/catalog";
 import { isAdmin } from "@/lib/admin-auth";
-import { PapapowLogo } from "@/components/papapow-logo";
 import { AdminSizePicker } from "@/components/admin-size-picker";
 import { AdminToast } from "@/components/admin-toast";
 import { AdminScrollPreserver } from "@/components/admin-scroll-preserver";
@@ -80,7 +79,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       <main className="admin-shell login-shell">
         <form className="login-panel" action={loginAction}>
           <a className="brand-mark" href="/">
-            <PapapowLogo compact />
+            <img src="/images/logo-white.jpg" alt="PAPAPOW" className="brand-logo-img" />
           </a>
           <h1>Admin Panel</h1>
           <p>Masuk untuk kelola produk dan banner katalog.</p>
@@ -104,7 +103,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       <header className="admin-header">
         <div>
           <a className="brand-mark" href="/">
-            <PapapowLogo compact />
+            <img src="/images/logo-white.jpg" alt="PAPAPOW" className="brand-logo-img" />
           </a>
           <h1>Catalog Admin</h1>
         </div>

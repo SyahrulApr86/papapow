@@ -96,8 +96,17 @@ input {
   display: inline-flex;
   height: 38px;
   justify-content: center;
-  min-width: 124px;
-  padding: 4px 10px;
+  overflow: hidden;
+  padding: 0;
+  width: 124px;
+}
+
+.brand-logo-img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
 }
 
 .papapow-logo {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { PapapowLogo } from "@/components/papapow-logo";
 import type { Product } from "@/lib/db";
 import { formatRupiah } from "@/lib/format";
 
@@ -40,7 +39,7 @@ export function SiteHeader({ products = [] }: { products?: Product[] }) {
         </div>
 
         <a className="brand-mark" href="/">
-          <PapapowLogo compact />
+          <img src="/images/logo-white.jpg" alt="PAPAPOW" className="brand-logo-img" />
         </a>
 
         <nav className="header-actions" aria-label="Shop actions">
