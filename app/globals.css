@@ -1877,6 +1877,44 @@ img { display: block; max-width: 100%; }
   .auth-banner { flex-direction: column; align-items: flex-start; }
   .auth-tab-content { padding: 20px 18px 24px; }
   .atc-sheet { border-radius: 20px 20px 0 0; }
+
+  /* Mobile header — logo kiri, hamburger kanan */
+  .site-header {
+    grid-template-columns: 1fr auto auto;
+    padding: 0 4px 0 12px;
+  }
+  /* Logo col 1, left-aligned */
+  .site-header .brand-mark {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    width: 110px;
+  }
+  /* Icons col 2 */
+  .site-header .header-actions {
+    grid-column: 2;
+    grid-row: 1;
+    gap: 0;
+  }
+  /* Hamburger col 3, far right */
+  .site-header .header-left {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+  /* Tighter icon sizes */
+  .icon-btn { width: 36px; height: 36px; }
+  .currency-badge { display: none; }
+  .search-pill {
+    background: transparent;
+    border-color: transparent;
+    color: var(--ink);
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+  .search-text { display: none; }
 }
 
 /* ── Toaster ── */
