@@ -2898,3 +2898,37 @@ textarea {
   .filter-search-wrap { display: none; }
   .footer-links { flex-wrap: wrap; }
 }
+
+/* ─────────────────────────────────────────────────────────
+   WHATSAPP FLOATING BUTTON
+───────────────────────────────────────────────────────── */
+.wa-float-btn {
+  align-items: center;
+  background: #25D366;
+  border: 3px solid #111;
+  bottom: 28px;
+  box-shadow: 4px 4px 0 0 #111;
+  color: #fff;
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px;
+  position: fixed;
+  right: 28px;
+  text-decoration: none;
+  transition: transform .12s, box-shadow .12s;
+  z-index: 200;
+}
+.wa-float-btn:hover {
+  box-shadow: 6px 6px 0 0 #111;
+  transform: translate(-2px, -2px);
+}
+.wa-float-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+@media (max-width: 480px) {
+  .wa-float-btn { bottom: 16px; right: 16px; padding: 12px; }
+  .wa-float-label { display: none; }
+}
