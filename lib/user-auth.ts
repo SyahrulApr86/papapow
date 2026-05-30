@@ -56,34 +56,38 @@ export async function getUserSession(): Promise<User | null> {
   if (!token || token.length !== expected.length) return null;
   if (!timingSafeEqual(Buffer.from(token), Buffer.from(expected))) return null;
 
-  const { rows } = await db.query<User>(
-    "SELECT id, email, name FROM users WHERE id = $1",
-    [id],
-  );
-  return rows[0] ?? null;
+  const user = await db.user.findUnique({
+    where: { id },
+    select: { id: true, email: true, name: true },
+  });
+  return user ?? null;
 }
 
 export async function registerUser(email: string, name: string, password: string) {
-  const existing = await db.query("SELECT id FROM users WHERE email = $1", [email]);
-  if (existing.rows.length > 0) return { error: "Email sudah terdaftar" };
+  const existing = await db.user.findUnique({ where: { email: email.toLowerCase().trim() } });
+  if (existing) return { error: "Email sudah terdaftar" };
 
   const { hash, salt } = hashPassword(password);
-  const { rows } = await db.query<{ id: number }>(
-    "INSERT INTO users (email, name, password_hash, salt) VALUES ($1, $2, $3, $4) RETURNING id",
-    [email.toLowerCase().trim(), name.trim(), hash, salt],
-  );
-  return { userId: rows[0].id };
+  const user = await db.user.create({
+    data: {
+      email: email.toLowerCase().trim(),
+      name: name.trim(),
+      password_hash: hash,
+      salt,
+    },
+  });
+  return { userId: user.id };
 }
 
 export async function loginUser(email: string, password: string) {
-  const { rows } = await db.query<{ id: number; password_hash: string; salt: string }>(
-    "SELECT id, password_hash, salt FROM users WHERE email = $1",
-    [email.toLowerCase().trim()],
-  );
-  if (!rows[0]) return { error: "Email atau password salah" };
+  const user = await db.user.findUnique({
+    where: { email: email.toLowerCase().trim() },
+    select: { id: true, password_hash: true, salt: true },
+  });
+  if (!user) return { error: "Email atau password salah" };
 
-  const ok = verifyPassword(password, rows[0].password_hash, rows[0].salt);
+  const ok = verifyPassword(password, user.password_hash, user.salt);
   if (!ok) return { error: "Email atau password salah" };
 
-  return { userId: rows[0].id };
+  return { userId: user.id };
 }

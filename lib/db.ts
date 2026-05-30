@@ -1,21 +1,14 @@
-import { Pool } from "pg";
+import { PrismaClient } from "@prisma/client";
 
 declare global {
   // eslint-disable-next-line no-var
-  var papapowPool: Pool | undefined;
+  var prisma: PrismaClient | undefined;
 }
 
-const connectionString =
-  process.env.DATABASE_URL ?? "postgres://papapow:papapow@localhost:55432/papapow";
-
-export const db =
-  globalThis.papapowPool ??
-  new Pool({
-    connectionString,
-  });
+export const db = globalThis.prisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-  globalThis.papapowPool = db;
+  globalThis.prisma = db;
 }
 
 export type Product = {
@@ -27,7 +20,6 @@ export type Product = {
   discount_label: string | null;
   main_image: string;
   hover_image: string | null;
-  /** Extra gallery images from product_images table */
   extra_images: string[];
   sizes: string[];
   description: string | null;
