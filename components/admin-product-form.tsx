@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
+import { formatRupiah } from "@/lib/catalog";
 import { AdminSizePicker } from "./admin-size-picker";
 
 /* ── Image upload box with preview ────────────────────── */
@@ -380,7 +381,6 @@ export function AdminProductForm({
     name?: string;
     category?: string;
     price?: number | null;
-    compare_at_price?: number | null;
     discount_label?: string | null;
     description?: string | null;
     material?: string | null;
@@ -393,6 +393,19 @@ export function AdminProductForm({
   submitLabel?: string;
   deleteAction?: (formData: FormData) => Promise<void>;
 }) {
+  const [price, setPrice] = useState<number>(defaultValues?.price ?? 0);
+  const [discountLabel, setDiscountLabel] = useState<string>(defaultValues?.discount_label ?? "");
+
+  const calcCompareAt = useCallback((p: number, label: string): number | null => {
+    const match = label.match(/(\d+(?:\.\d+)?)/);
+    if (!match) return null;
+    const pct = parseFloat(match[1]);
+    if (pct <= 0 || pct >= 100) return null;
+    return Math.round(p / (1 - pct / 100));
+  }, []);
+
+  const compareAt = calcCompareAt(price, discountLabel);
+
   return (
     <form action={action} className="apf-form">
       {productId && <input name="id" type="hidden" value={productId} />}
@@ -432,28 +445,35 @@ export function AdminProductForm({
       </FormSection>
 
       {/* ── Harga ── */}
-      <FormSection title="Harga" cols={3}>
-        <Field
-          label="Harga (Rp)"
-          name="price"
-          type="number"
-          defaultValue={defaultValues?.price}
-          required
-          placeholder="419000"
-        />
-        <Field
-          label="Harga Coret (Rp)"
-          name="compare_at_price"
-          type="number"
-          defaultValue={defaultValues?.compare_at_price}
-          placeholder="499000"
-        />
-        <Field
-          label="Label Diskon"
-          name="discount_label"
-          defaultValue={defaultValues?.discount_label}
-          placeholder="mis. 16%"
-        />
+      <FormSection title="Harga" cols={2}>
+        <label className="field">
+          <span className="field-label">Harga Jual (Rp)</span>
+          <input
+            name="price"
+            type="number"
+            required
+            placeholder="419000"
+            value={price || ""}
+            onChange={e => setPrice(Number(e.target.value) || 0)}
+          />
+        </label>
+        <label className="field">
+          <span className="field-label">Diskon (%)</span>
+          <input
+            name="discount_label"
+            type="text"
+            placeholder="mis. 16%"
+            value={discountLabel}
+            onChange={e => setDiscountLabel(e.target.value)}
+          />
+          {compareAt ? (
+            <span className="field-hint">
+              Harga coret otomatis: <strong>{formatRupiah(compareAt)}</strong>
+            </span>
+          ) : price > 0 ? (
+            <span className="field-hint field-hint-muted">Kosongkan diskon = tidak ada harga coret</span>
+          ) : null}
+        </label>
       </FormSection>
 
       {/* ── Ukuran ── */}

@@ -82,7 +82,6 @@ export default async function ProductsPage() {
                   name: product.name,
                   category: product.category,
                   price: product.price,
-                  compare_at_price: product.compare_at_price,
                   discount_label: product.discount_label,
                   description: product.description,
                   material: product.material,

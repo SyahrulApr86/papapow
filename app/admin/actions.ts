@@ -57,6 +57,15 @@ function rethrowRedirect(e: any) {
   if (e?.digest?.startsWith("NEXT_REDIRECT")) throw e;
 }
 
+function calcCompareAtPrice(price: number, discountLabel: string | null): number | null {
+  if (!discountLabel) return null;
+  const match = discountLabel.match(/(\d+(?:\.\d+)?)/);
+  if (!match) return null;
+  const pct = parseFloat(match[1]);
+  if (pct <= 0 || pct >= 100) return null;
+  return Math.round(price / (1 - pct / 100));
+}
+
 function parseSizes(formData: FormData): string[] {
   const raw = text(formData, "sizes");
   if (!raw) return [];
@@ -92,13 +101,16 @@ export async function createProduct(formData: FormData) {
     const newExtras  = await uploadFiles(formData.getAll("extra_new"), "Gambar Tambahan");
     const extraImages = [...keptUrls, ...newExtras];
 
+    const price          = intValue(formData, "price");
+    const discountLabel  = nullableText(formData, "discount_label");
+
     const product = await db.product.create({
       data: {
         name:             text(formData, "name"),
         category:         text(formData, "category"),
-        price:            intValue(formData, "price"),
-        compare_at_price: nullableInt(formData, "compare_at_price"),
-        discount_label:   nullableText(formData, "discount_label"),
+        price,
+        compare_at_price: calcCompareAtPrice(price, discountLabel),
+        discount_label:   discountLabel,
         main_image:       mainImage,
         hover_image:      hoverImage,
         sizes:            parseSizes(formData),
@@ -138,14 +150,17 @@ export async function updateProduct(formData: FormData) {
     const uploaded   = await uploadFiles(formData.getAll("extra_new"), "Gambar Tambahan");
     const newExtras  = [...keptUrls, ...uploaded];
 
+    const price         = intValue(formData, "price");
+    const discountLabel = nullableText(formData, "discount_label");
+
     await db.product.update({
       where: { id: productId },
       data: {
         name:             text(formData, "name"),
         category:         text(formData, "category"),
-        price:            intValue(formData, "price"),
-        compare_at_price: nullableInt(formData, "compare_at_price"),
-        discount_label:   nullableText(formData, "discount_label"),
+        price,
+        compare_at_price: calcCompareAtPrice(price, discountLabel),
+        discount_label:   discountLabel,
         main_image:       mainImage,
         hover_image:      hoverImage,
         sizes:            parseSizes(formData),

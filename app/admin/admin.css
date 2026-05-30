@@ -437,6 +437,13 @@ textarea {
   letter-spacing: .08em;
   text-transform: uppercase;
 }
+.field-hint {
+  color: var(--ink);
+  font-size: 12px;
+}
+.field-hint-muted {
+  color: var(--muted);
+}
 
 /* Image upload box */
 .img-upload-box {
