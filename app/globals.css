@@ -1577,10 +1577,13 @@ img { display: block; max-width: 100%; }
 
 .auth-btn-outline {
   align-items: center;
+  background: transparent;
   border: 1.5px solid rgba(255,255,255,0.6);
   border-radius: 0;
   color: #fff;
+  cursor: pointer;
   display: inline-flex;
+  font-family: inherit;
   font-size: 12px;
   font-weight: 700;
   height: 40px;
@@ -1598,7 +1601,9 @@ img { display: block; max-width: 100%; }
   border: 1.5px solid #fff;
   border-radius: 0;
   color: var(--ink);
+  cursor: pointer;
   display: inline-flex;
+  font-family: inherit;
   font-size: 12px;
   font-weight: 700;
   height: 40px;
