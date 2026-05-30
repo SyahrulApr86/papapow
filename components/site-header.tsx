@@ -267,11 +267,20 @@ export function SiteHeader({ products = [], user }: { products?: Product[]; user
           <div className="cart-items">
             {cartItems.map((item) => (
               <div key={`${item.productId}-${item.size}`} className="cart-item">
-                <div className="cart-item-img">
+                <a
+                  href={`/products/${item.productId}`}
+                  className="cart-item-img"
+                  onClick={() => setCartOpen(false)}
+                  aria-label={item.name}
+                >
                   <img src={item.image} alt={item.name} loading="lazy" decoding="async" />
-                </div>
+                </a>
                 <div className="cart-item-info">
-                  <p className="cart-item-name">{item.name}</p>
+                  <a
+                    href={`/products/${item.productId}`}
+                    className="cart-item-name"
+                    onClick={() => setCartOpen(false)}
+                  >{item.name}</a>
                   {item.size && <p className="cart-item-size">Ukuran: {item.size}</p>}
                   <p className="cart-item-price">{formatRupiah(item.price)}</p>
                   <div className="cart-item-qty-row">
