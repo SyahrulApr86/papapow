@@ -2,6 +2,7 @@
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { isAdmin, loginAdmin, logoutAdmin } from "@/lib/admin-auth";
 import { setSetting } from "@/lib/settings";
@@ -71,8 +72,11 @@ function parseSizes(formData: FormData): string[] {
 }
 
 export async function loginAction(formData: FormData) {
-  const ok = await loginAdmin(text(formData, "password"));
-  if (!ok) redirect("/admin?error=1");
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  const result = await loginAdmin(text(formData, "password"), ip);
+  if (result === "rate_limited") redirect("/admin?error=rate_limited");
+  if (!result) redirect("/admin?error=1");
   redirect("/admin/products");
 }
 

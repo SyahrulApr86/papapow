@@ -3,6 +3,27 @@ import { cookies } from "next/headers";
 
 const cookieName = "papapow_admin";
 
+// In-memory rate limiter — resets on cold start (good enough for single admin)
+const attempts = new Map<string, { count: number; resetAt: number }>();
+const MAX_ATTEMPTS = 5;
+const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = attempts.get(ip);
+  if (!entry || now > entry.resetAt) {
+    attempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= MAX_ATTEMPTS) return false;
+  entry.count++;
+  return true;
+}
+
+function clearRateLimit(ip: string) {
+  attempts.delete(ip);
+}
+
 function digest(value: string) {
   return createHash("sha256").update(value).digest("hex");
 }
@@ -18,19 +39,26 @@ export async function isAdmin() {
   const token = cookieStore.get(cookieName)?.value;
   const expected = sessionValue(password);
 
-  if (!token || token.length !== expected.length) {
-    return false;
-  }
-
+  if (!token || token.length !== expected.length) return false;
   return timingSafeEqual(Buffer.from(token), Buffer.from(expected));
 }
 
-export async function loginAdmin(password: string) {
+export async function loginAdmin(password: string, ip = "unknown") {
+  if (!checkRateLimit(ip)) return "rate_limited";
+
   const expectedPassword = process.env.ADMIN_PASSWORD ?? "papapow";
 
-  if (password !== expectedPassword) {
-    return false;
-  }
+  // Timing-safe compare via digest — both sides go through same hash
+  const inputHash    = Buffer.from(digest(password));
+  const expectedHash = Buffer.from(digest(expectedPassword));
+
+  const match =
+    inputHash.length === expectedHash.length &&
+    timingSafeEqual(inputHash, expectedHash);
+
+  if (!match) return false;
+
+  clearRateLimit(ip);
 
   const cookieStore = await cookies();
   cookieStore.set(cookieName, sessionValue(expectedPassword), {

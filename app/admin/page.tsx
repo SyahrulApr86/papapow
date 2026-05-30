@@ -28,7 +28,14 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             Kelola produk dan banner katalog PAPAPOW.
           </p>
         </div>
-        {error && <strong className="form-error" style={{ fontSize: 13 }}>✕ Password salah. Coba lagi.</strong>}
+        {error === "rate_limited" && (
+          <strong className="form-error" style={{ fontSize: 13 }}>
+            ✕ Terlalu banyak percobaan. Coba lagi dalam 15 menit.
+          </strong>
+        )}
+        {error && error !== "rate_limited" && (
+          <strong className="form-error" style={{ fontSize: 13 }}>✕ Password salah. Coba lagi.</strong>
+        )}
         <label className="field">
           <span className="field-label">Password</span>
           <input name="password" type="password" required autoFocus placeholder="••••••••" />
