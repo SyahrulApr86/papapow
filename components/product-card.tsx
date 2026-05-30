@@ -63,9 +63,9 @@ export function ProductCard({
       </button>
 
       <a className="product-image" href={`/products/${product.id}`}>
-        <img className="main-img" src={product.main_image} alt={product.name} />
+        <img className="main-img" src={product.main_image} alt={product.name} loading="lazy" decoding="async" />
         {product.hover_image && (
-          <img className="hover-img" src={product.hover_image} alt="" />
+          <img className="hover-img" src={product.hover_image} alt="" loading="lazy" decoding="async" />
         )}
       </a>
 

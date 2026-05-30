@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { isAdmin, loginAdmin, logoutAdmin } from "@/lib/admin-auth";
@@ -112,6 +112,7 @@ export async function createProduct(formData: FormData) {
       },
     });
 
+    revalidateTag("products", "default");
     revalidatePath("/", "layout");
     redirect("/admin/products?updated=Produk+berhasil+ditambahkan");
   } catch (e: any) {
@@ -160,6 +161,7 @@ export async function updateProduct(formData: FormData) {
       },
     });
 
+    revalidateTag("products", "default");
     revalidatePath("/", "layout");
     redirect("/admin/products?updated=Produk+berhasil+diupdate");
   } catch (e: any) {
@@ -172,6 +174,7 @@ export async function deleteProduct(formData: FormData) {
   await requireAdmin();
 
   await db.product.delete({ where: { id: intValue(formData, "id") } });
+  revalidateTag("products", "default");
   revalidatePath("/", "layout");
   redirect("/admin/products?updated=Produk+berhasil+dihapus");
 }
@@ -203,6 +206,7 @@ export async function updateBanner(formData: FormData) {
     },
   });
 
+  revalidateTag("banners", "default");
   revalidatePath("/", "layout");
   redirect("/admin/banners?updated=Banner+berhasil+diupdate");
 }
@@ -210,6 +214,7 @@ export async function updateBanner(formData: FormData) {
 export async function updateSettings(formData: FormData) {
   await requireAdmin();
   await setSetting("wa_number", text(formData, "wa_number"));
+  revalidateTag("settings", "default");
   revalidatePath("/", "layout");
   redirect("/admin/settings?updated=Pengaturan+berhasil+disimpan");
 }

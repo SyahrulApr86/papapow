@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { db, type Banner, type Product } from "@/lib/db";
 
 const includeExtraImages = {
@@ -24,46 +25,62 @@ function toProduct(row: any): Product {
   };
 }
 
-export async function getProducts(): Promise<Product[]> {
-  const rows = await db.product.findMany({
-    include: includeExtraImages,
-    orderBy: [{ sort_order: "asc" }, { id: "asc" }],
-  });
-  return rows.map(toProduct);
-}
+export const getProducts = unstable_cache(
+  async (): Promise<Product[]> => {
+    const rows = await db.product.findMany({
+      include: includeExtraImages,
+      orderBy: [{ sort_order: "asc" }, { id: "asc" }],
+    });
+    return rows.map(toProduct);
+  },
+  ["products"],
+  { tags: ["products"] },
+);
 
-export async function getFeaturedProducts(): Promise<Product[]> {
-  const rows = await db.product.findMany({
-    where: { is_featured: true },
-    include: includeExtraImages,
-    orderBy: [{ sort_order: "asc" }, { id: "asc" }],
-    take: 8,
-  });
-  return rows.map(toProduct);
-}
+export const getFeaturedProducts = unstable_cache(
+  async (): Promise<Product[]> => {
+    const rows = await db.product.findMany({
+      where: { is_featured: true },
+      include: includeExtraImages,
+      orderBy: [{ sort_order: "asc" }, { id: "asc" }],
+      take: 8,
+    });
+    return rows.map(toProduct);
+  },
+  ["products-featured"],
+  { tags: ["products"] },
+);
 
-export async function getProductById(id: number): Promise<Product | null> {
-  const row = await db.product.findUnique({
-    where: { id },
-    include: includeExtraImages,
-  });
-  return row ? toProduct(row) : null;
-}
+export const getProductById = unstable_cache(
+  async (id: number): Promise<Product | null> => {
+    const row = await db.product.findUnique({
+      where: { id },
+      include: includeExtraImages,
+    });
+    return row ? toProduct(row) : null;
+  },
+  ["product-by-id"],
+  { tags: ["products"] },
+);
 
-export async function getBanners(): Promise<Banner[]> {
-  const rows = await db.banner.findMany({
-    orderBy: [{ sort_order: "asc" }, { id: "asc" }],
-  });
-  return rows.map((r) => ({
-    id: r.id,
-    title: r.title,
-    subtitle: r.subtitle,
-    image_url: r.image_url,
-    cta_label: r.cta_label,
-    cta_href: r.cta_href,
-    placement: r.placement as "hero" | "bottom",
-    sort_order: r.sort_order,
-  }));
-}
+export const getBanners = unstable_cache(
+  async (): Promise<Banner[]> => {
+    const rows = await db.banner.findMany({
+      orderBy: [{ sort_order: "asc" }, { id: "asc" }],
+    });
+    return rows.map((r) => ({
+      id: r.id,
+      title: r.title,
+      subtitle: r.subtitle,
+      image_url: r.image_url,
+      cta_label: r.cta_label,
+      cta_href: r.cta_href,
+      placement: r.placement as "hero" | "bottom",
+      sort_order: r.sort_order,
+    }));
+  },
+  ["banners"],
+  { tags: ["banners"] },
+);
 
 export { formatRupiah } from "@/lib/format";

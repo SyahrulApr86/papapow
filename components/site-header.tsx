@@ -153,7 +153,7 @@ export function SiteHeader({ products = [], user }: { products?: Product[]; user
                         onClick={() => setSearchOpen(false)}
                       >
                         <div className="search-result-img">
-                          <img src={p.main_image} alt={p.name} />
+                          <img src={p.main_image} alt={p.name} loading="lazy" decoding="async" />
                         </div>
                         <div className="search-result-info">
                           <p className="search-result-name">{p.name}</p>
@@ -268,7 +268,7 @@ export function SiteHeader({ products = [], user }: { products?: Product[]; user
             {cartItems.map((item) => (
               <div key={`${item.productId}-${item.size}`} className="cart-item">
                 <div className="cart-item-img">
-                  <img src={item.image} alt={item.name} />
+                  <img src={item.image} alt={item.name} loading="lazy" decoding="async" />
                 </div>
                 <div className="cart-item-info">
                   <p className="cart-item-name">{item.name}</p>
@@ -327,7 +327,7 @@ export function SiteHeader({ products = [], user }: { products?: Product[]; user
                   onClick={() => setCartOpen(false)}
                 >
                   <div className="cart-suggestion-img">
-                    <img src={p.main_image} alt={p.name} />
+                    <img src={p.main_image} alt={p.name} loading="lazy" decoding="async" />
                   </div>
                   <p className="cart-suggestion-name">{p.name}</p>
                   <div className="cart-suggestion-price">

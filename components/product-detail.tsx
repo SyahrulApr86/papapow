@@ -49,7 +49,7 @@ export function ProductDetail({
         {/* ── Image gallery ── */}
         <section className="detail-images">
           <div className="detail-main-img">
-            <img src={allImages[activeImg]} alt={product.name} />
+            <img src={allImages[activeImg]} alt={product.name} decoding="async" />
           </div>
           {allImages.length > 1 && (
             <div className="detail-thumbs">
@@ -61,7 +61,7 @@ export function ProductDetail({
                   onClick={() => setActiveImg(i)}
                   aria-label={`Gambar ${i + 1}`}
                 >
-                  <img src={url} alt={`${product.name} ${i + 1}`} />
+                  <img src={url} alt={`${product.name} ${i + 1}`} loading="lazy" decoding="async" />
                 </button>
               ))}
             </div>
@@ -212,7 +212,7 @@ export function ProductDetail({
             {related.map(p => (
               <a key={p.id} className="detail-related-card" href={`/products/${p.id}`}>
                 <div className="detail-related-img">
-                  <img src={p.main_image} alt={p.name} />
+                  <img src={p.main_image} alt={p.name} loading="lazy" decoding="async" />
                 </div>
                 <p className="detail-related-name">{p.name}</p>
                 <div className="detail-related-price">
