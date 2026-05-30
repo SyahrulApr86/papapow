@@ -1709,7 +1709,17 @@ img { display: block; max-width: 100%; }
 }
 
 .auth-hint { color: var(--muted); font-size: 13px; margin: 0; text-align: center; }
-.auth-link { color: var(--ink); font-weight: 700; text-decoration: underline; }
+.auth-link {
+  background: none;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  padding: 0;
+  text-decoration: underline;
+}
 
 .account-welcome {
   align-items: center;
