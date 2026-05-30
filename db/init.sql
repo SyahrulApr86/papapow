@@ -123,7 +123,7 @@ Ribbed cuff & hem', 580, true, 6, '2026-05-28 07:29:36.614187+00', 'data:image/j
 
 
 
-INSERT INTO public.site_settings (key, value) VALUES ('wa_number', '6281234567890');
+INSERT INTO public.site_settings (key, value) VALUES ('wa_number', '628953919161725');
 
 
 
