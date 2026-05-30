@@ -15,8 +15,6 @@ model Product {
   price            Int
   compare_at_price Int?
   discount_label   String?
-  image_url        String         @default("")
-  images           Json           @default("[]")
   sizes            Json           @default("[\"S\",\"M\",\"L\",\"XL\",\"XXL\"]")
   description      String?        @default("")
   material         String?        @default("")
