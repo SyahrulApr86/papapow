@@ -934,9 +934,12 @@ img { display: block; max-width: 100%; }
 
 /* ── Info panel ── */
 .detail-info {
+  background: var(--paper);
+  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: clamp(20px, 3vw, 40px);
 }
 
 .detail-stock-row {
@@ -1092,11 +1095,11 @@ img { display: block; max-width: 100%; }
 
 /* Shipping info card */
 .detail-shipping-card {
-  border: 1px solid var(--border);
+  border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 16px;
+  padding-top: 20px;
 }
 .detail-shipping-title {
   font-size: 11px;
