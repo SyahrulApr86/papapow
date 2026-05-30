@@ -34,7 +34,11 @@ export default async function Home() {
       />
       <SiteHeader products={products} user={user} />
 
-      <section className="hero" style={{ backgroundImage: `url(${hero?.image_url})` }}>
+      <section className="hero">
+        {hero?.image_url && (
+          <img src={hero.image_url} alt="PAPAPOW hero" className="hero-bg-img" />
+        )}
+        <div className="hero-overlay" />
         <div className="hero-copy">
           <img src="/images/logo-white.jpg" alt="PAPAPOW" className="hero-logo" />
         </div>

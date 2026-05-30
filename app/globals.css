@@ -267,31 +267,34 @@ img { display: block; max-width: 100%; }
 ───────────────────────────────────────────────────────── */
 
 .hero {
-  align-items: flex-end;
-  background-position: center top;
-  background-size: cover;
-  display: flex;
-  min-height: 90vh;
-  max-height: 900px;
-  padding: clamp(32px, 5vw, 72px);
+  display: block;
   position: relative;
   width: 100%;
 }
-@media (max-width: 768px) {
-  .hero { min-height: 75vh; max-height: 700px; }
+
+.hero-bg-img {
+  display: block;
+  height: auto;
+  width: 100%;
 }
 
-.hero::before {
+.hero-overlay {
   background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.2) 40%, transparent 70%);
-  content: "";
   inset: 0;
+  pointer-events: none;
   position: absolute;
 }
 
 .hero-copy {
+  align-items: flex-end;
+  bottom: 0;
   color: #fff;
-  max-width: 640px;
-  position: relative;
+  display: flex;
+  left: 0;
+  padding: clamp(32px, 5vw, 72px);
+  position: absolute;
+  right: 0;
+  top: 0;
   z-index: 1;
 }
 
