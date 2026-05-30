@@ -170,6 +170,192 @@ function FormSection({
   );
 }
 
+/* ── Gallery Manager: per-image add/replace/delete ──────── */
+
+type GalleryItem =
+  | { kind: "existing"; url: string }
+  | { kind: "new"; file: File; previewUrl: string; inputId: string };
+
+function GalleryManager({ existing = [] }: { existing: string[] }) {
+  const addInputRef = useRef<HTMLInputElement>(null);
+  const [items, setItems] = useState<GalleryItem[]>(
+    existing.filter(Boolean).map((url) => ({ kind: "existing", url }))
+  );
+
+  function handleAdd(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+    const newItems: GalleryItem[] = files.map((file) => ({
+      kind: "new",
+      file,
+      previewUrl: URL.createObjectURL(file),
+      inputId: crypto.randomUUID(),
+    }));
+    setItems((prev) => [...prev, ...newItems]);
+    // reset so same file can be re-selected
+    if (addInputRef.current) addInputRef.current.value = "";
+  }
+
+  function removeItem(idx: number) {
+    setItems((prev) => {
+      const item = prev[idx];
+      if (item.kind === "new") URL.revokeObjectURL(item.previewUrl);
+      return prev.filter((_, i) => i !== idx);
+    });
+  }
+
+  function replaceItem(idx: number, file: File) {
+    const previewUrl = URL.createObjectURL(file);
+    const inputId = crypto.randomUUID();
+    setItems((prev) =>
+      prev.map((item, i) => {
+        if (i !== idx) return item;
+        if (item.kind === "new") URL.revokeObjectURL(item.previewUrl);
+        return { kind: "new", file, previewUrl, inputId };
+      })
+    );
+  }
+
+  return (
+    <div className="gallery-manager">
+      <p className="img-upload-label">Galeri Tambahan</p>
+
+      <div className="gallery-grid">
+        {items.map((item, idx) => (
+          <GalleryCard
+            key={item.kind === "existing" ? item.url : item.inputId}
+            item={item}
+            onRemove={() => removeItem(idx)}
+            onReplace={(file) => replaceItem(idx, file)}
+          />
+        ))}
+
+        {/* Add new card */}
+        <button
+          type="button"
+          className="gallery-add-card"
+          onClick={() => addInputRef.current?.click()}
+          title="Tambah gambar"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          <span>Tambah</span>
+        </button>
+      </div>
+
+      {/* Hidden add-input (multiple) */}
+      <input
+        ref={addInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleAdd}
+        style={{ display: "none" }}
+      />
+
+      {/* Render hidden inputs for form submission */}
+      {items.map((item, i) => {
+        if (item.kind === "existing") {
+          return (
+            <input
+              key={item.url + i}
+              type="hidden"
+              name="extra_keep"
+              value={item.url}
+            />
+          );
+        }
+        // new file — use a DataTransfer trick via a ref'd file input
+        return (
+          <NewFileInput key={item.inputId} id={item.inputId} file={item.file} />
+        );
+      })}
+    </div>
+  );
+}
+
+function GalleryCard({
+  item,
+  onRemove,
+  onReplace,
+}: {
+  item: GalleryItem;
+  onRemove: () => void;
+  onReplace: (f: File) => void;
+}) {
+  const replaceRef = useRef<HTMLInputElement>(null);
+  const src = item.kind === "existing" ? item.url : item.previewUrl;
+
+  function handleReplace(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) onReplace(file);
+    if (replaceRef.current) replaceRef.current.value = "";
+  }
+
+  return (
+    <div className="gallery-card">
+      <img src={src} alt="" className="gallery-card-img" />
+      <div className="gallery-card-actions">
+        <button
+          type="button"
+          className="gallery-card-btn replace"
+          title="Ganti gambar ini"
+          onClick={() => replaceRef.current?.click()}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 2v6h-6" />
+            <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+            <path d="M3 22v-6h6" />
+            <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          className="gallery-card-btn remove"
+          title="Hapus gambar ini"
+          onClick={onRemove}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <input
+        ref={replaceRef}
+        type="file"
+        accept="image/*"
+        onChange={handleReplace}
+        style={{ display: "none" }}
+      />
+    </div>
+  );
+}
+
+/** Attaches a File object to a hidden file input via DataTransfer */
+function NewFileInput({ id, file }: { id: string; file: File }) {
+  return (
+    <input
+      ref={(el) => {
+        if (!el) return;
+        try {
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          el.files = dt.files;
+        } catch {
+          // DataTransfer not supported
+        }
+      }}
+      type="file"
+      name="extra_new"
+      accept="image/*"
+      style={{ display: "none" }}
+    />
+  );
+}
+
 /* ── Product: existing image props ─────────────────────── */
 
 type ImageProps = {
@@ -224,12 +410,7 @@ export function AdminProductForm({
           label="Gambar Hover"
           existing={images?.hoverImage}
         />
-        <ImageBox
-          name="extra_images_file"
-          label="Galeri Tambahan"
-          multiple
-          existing={images?.extraImages ?? []}
-        />
+        <GalleryManager existing={images?.extraImages ?? []} />
       </FormSection>
 
       {/* ── Info dasar ── */}

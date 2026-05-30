@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Product } from "@/lib/db";
 import { formatRupiah } from "@/lib/format";
 import { AddToCartModal } from "./add-to-cart-modal";
+import { isWishlisted, toggleWishlist, WISHLIST_EVENT } from "@/lib/wishlist-store";
+import { showToast } from "@/lib/toast-store";
 
 export function ProductDetail({
   product,
   related,
+  waNumber = "6281234567890",
 }: {
   product: Product;
   related: Product[];
+  waNumber?: string;
 }) {
   const allImages = [
     product.main_image,
@@ -21,9 +25,26 @@ export function ProductDetail({
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes?.[0] ?? "");
   const [qty, setQty] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+  const [wishlisted, setWishlisted] = useState(false);
+
+  useEffect(() => {
+    setWishlisted(isWishlisted(product.id));
+    const sync = () => setWishlisted(isWishlisted(product.id));
+    window.addEventListener(WISHLIST_EVENT, sync);
+    return () => window.removeEventListener(WISHLIST_EVENT, sync);
+  }, [product.id]);
 
   return (
     <>
+      {/* Breadcrumb */}
+      <nav className="breadcrumb detail-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span className="breadcrumb-sep">›</span>
+        <a href="/products">Semua Produk</a>
+        <span className="breadcrumb-sep">›</span>
+        <span>{product.name}</span>
+      </nav>
+
       <div className="detail-layout">
         {/* ── Image gallery ── */}
         <section className="detail-images">
@@ -51,8 +72,22 @@ export function ProductDetail({
         <section className="detail-info">
           <div className="detail-stock-row">
             <span className="detail-stock-badge">Ada Stok</span>
-            <button className="detail-wishlist-btn icon-btn" aria-label="Tambah ke Wishlist">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <button
+              className={`detail-wishlist-btn icon-btn${wishlisted ? " wishlisted" : ""}`}
+              aria-label={wishlisted ? "Hapus dari Wishlist" : "Tambah ke Wishlist"}
+              onClick={() => {
+                const added = toggleWishlist({
+                  productId: product.id,
+                  name: product.name,
+                  image: product.main_image,
+                  price: product.price,
+                  compare_at_price: product.compare_at_price,
+                });
+                setWishlisted(!wishlisted);
+                showToast(added ? "Ditambahkan ke wishlist" : "Dihapus dari wishlist", added ? "success" : "info");
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill={wishlisted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
             </button>
@@ -115,9 +150,14 @@ export function ProductDetail({
             <button className="detail-atc-btn" type="button" onClick={() => setModalOpen(true)}>
               Tambah Ke Keranjang
             </button>
-            <button className="detail-buy-now-btn" type="button">
+            <a
+              className="detail-buy-now-btn"
+              href={`https://wa.me/${waNumber}?text=${encodeURIComponent(`Halo, saya mau beli ${product.name}${selectedSize ? ` ukuran ${selectedSize}` : ""}. Apakah masih tersedia?`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Beli Sekarang
-            </button>
+            </a>
           </div>
 
           {product.description && (
@@ -152,7 +192,7 @@ export function ProductDetail({
 
           <a
             className="detail-chat-btn"
-            href="https://wa.me/6281234567890"
+            href={`https://wa.me/${waNumber}?text=${encodeURIComponent(`Halo, saya ingin bertanya tentang produk ${product.name}.`)}`}
             target="_blank"
             rel="noopener noreferrer"
           >

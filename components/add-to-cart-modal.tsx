@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { Product } from "@/lib/db";
 import { formatRupiah } from "@/lib/format";
+import { addToCart } from "@/lib/cart-store";
+import { showToast } from "@/lib/toast-store";
 
 export function AddToCartModal({
   product,
@@ -84,7 +86,22 @@ export function AddToCartModal({
           </button>
         </div>
 
-        <button className="atc-submit" type="button" onClick={onClose}>
+        <button
+          className="atc-submit"
+          type="button"
+          onClick={() => {
+            addToCart({
+              productId: product.id,
+              name: product.name,
+              image: product.main_image,
+              size: selectedSize,
+              price: product.price,
+              qty,
+            });
+            showToast(`${product.name} ditambahkan ke keranjang`);
+            onClose();
+          }}
+        >
           Tambah Ke Keranjang
         </button>
       </div>

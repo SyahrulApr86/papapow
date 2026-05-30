@@ -52,7 +52,7 @@ export default async function BannersPage() {
           <div className="admin-card" key={banner.id}>
             <div className="admin-card-header">
               <h3 className="admin-card-title" style={{ textTransform: "capitalize" }}>
-                {banner.placement === "hero" ? "🖼️ Hero (Utama)" : "📌 Bottom Banner"}
+                {banner.placement === "hero" ? "Hero (Utama)" : "Bottom Banner"}
               </h3>
             </div>
             <div className="admin-card-body">
@@ -70,10 +70,7 @@ export default async function BannersPage() {
                       borderRadius: 8,
                       display: "block",
                       height: "auto",
-                      maxHeight: 320,
-                      objectFit: "contain",
                       width: "100%",
-                      background: "var(--soft)",
                     }}
                   />
                 </div>

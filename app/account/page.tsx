@@ -86,7 +86,7 @@ export default async function AccountPage({
             {/* Logged in state */}
             <div className="account-welcome">
               <div className="account-welcome-info">
-                <p className="account-welcome-name">Halo, {user.name} 👋</p>
+                <p className="account-welcome-name">Halo, {user.name}</p>
                 <p className="account-welcome-email">{user.email}</p>
               </div>
               <form action={logoutAction}>

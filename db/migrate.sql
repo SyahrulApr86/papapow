@@ -12,3 +12,11 @@ CREATE TABLE IF NOT EXISTS users (
   salt TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+CREATE TABLE IF NOT EXISTS site_settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL DEFAULT ''
+);
+
+INSERT INTO site_settings (key, value) VALUES ('wa_number', '6281234567890')
+ON CONFLICT (key) DO NOTHING;

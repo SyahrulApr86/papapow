@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { isAdmin, loginAdmin, logoutAdmin } from "@/lib/admin-auth";
+import { setSetting } from "@/lib/settings";
 
 function text(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
@@ -95,14 +96,17 @@ export async function createProduct(formData: FormData) {
   try {
     const mainImage  = await uploadFile(formData.get("main_image_file"),  "Gambar Utama") ?? "";
     const hoverImage = await uploadFile(formData.get("hover_image_file"), "Gambar Hover");
-    const extraImages = await uploadFiles(formData.getAll("extra_images_file"), "Gambar Tambahan");
+    // extra_keep = existing URLs to retain, extra_new = newly uploaded files
+    const keptUrls   = formData.getAll("extra_keep").map(String).filter(Boolean);
+    const newExtras  = await uploadFiles(formData.getAll("extra_new"), "Gambar Tambahan");
+    const extraImages = [...keptUrls, ...newExtras];
 
     const { rows } = await db.query(
       `INSERT INTO products
         (name, category, price, compare_at_price, discount_label,
-         image_url, main_image, hover_image,
+         main_image, hover_image,
          sizes, description, material, weight, is_featured, sort_order)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
        RETURNING id`,
       [
         text(formData, "name"),
@@ -110,7 +114,6 @@ export async function createProduct(formData: FormData) {
         intValue(formData, "price"),
         nullableInt(formData, "compare_at_price"),
         nullableText(formData, "discount_label"),
-        mainImage,
         mainImage,
         hoverImage,
         jsonArray(formData, "sizes"),
@@ -134,7 +137,7 @@ export async function createProduct(formData: FormData) {
       );
     }
 
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     redirect("/admin/products?updated=Produk+berhasil+ditambahkan");
   } catch (e: any) {
     rethrowRedirect(e);
@@ -158,22 +161,24 @@ export async function updateProduct(formData: FormData) {
 
     const mainImage  = (await uploadFile(formData.get("main_image_file"),  "Gambar Utama"))  ?? existingMain;
     const hoverImage = (await uploadFile(formData.get("hover_image_file"), "Gambar Hover")) ?? existingHover;
-    const newExtras  = await uploadFiles(formData.getAll("extra_images_file"), "Gambar Tambahan");
+    // extra_keep = existing URLs to retain, extra_new = newly uploaded files
+    const keptUrls  = formData.getAll("extra_keep").map(String).filter(Boolean);
+    const uploaded  = await uploadFiles(formData.getAll("extra_new"), "Gambar Tambahan");
+    const newExtras = [...keptUrls, ...uploaded];
 
     await db.query(
       `UPDATE products
        SET name=$1, category=$2, price=$3, compare_at_price=$4,
-           discount_label=$5, image_url=$6, main_image=$7, hover_image=$8,
-           sizes=$9, description=$10, material=$11, weight=$12,
-           is_featured=$13, sort_order=$14
-       WHERE id=$15`,
+           discount_label=$5, main_image=$6, hover_image=$7,
+           sizes=$8, description=$9, material=$10, weight=$11,
+           is_featured=$12, sort_order=$13
+       WHERE id=$14`,
       [
         text(formData, "name"),
         text(formData, "category"),
         intValue(formData, "price"),
         nullableInt(formData, "compare_at_price"),
         nullableText(formData, "discount_label"),
-        mainImage,
         mainImage,
         hoverImage,
         jsonArray(formData, "sizes"),
@@ -186,9 +191,10 @@ export async function updateProduct(formData: FormData) {
       ],
     );
 
-    // Replace extra gallery only if new files uploaded
+    // Always reconcile gallery — delete all and reinsert based on submitted state
+    // (extra_keep preserves existing URLs; extra_new adds new uploads; absence = deleted)
+    await db.query("DELETE FROM product_images WHERE product_id = $1", [productId]);
     if (newExtras.length > 0) {
-      await db.query("DELETE FROM product_images WHERE product_id = $1", [productId]);
       await Promise.all(
         newExtras.map((url, i) =>
           db.query(
@@ -199,7 +205,7 @@ export async function updateProduct(formData: FormData) {
       );
     }
 
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     redirect("/admin/products?updated=Produk+berhasil+diupdate");
   } catch (e: any) {
     rethrowRedirect(e);
@@ -213,7 +219,7 @@ export async function deleteProduct(formData: FormData) {
   const productId = intValue(formData, "id");
   // product_images auto-deleted via ON DELETE CASCADE
   await db.query("DELETE FROM products WHERE id = $1", [productId]);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/products?updated=Produk+berhasil+dihapus");
 }
 
@@ -248,6 +254,13 @@ export async function updateBanner(formData: FormData) {
     ],
   );
 
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect("/admin/banners?updated=Banner+berhasil+diupdate");
+}
+
+export async function updateSettings(formData: FormData) {
+  await requireAdmin();
+  await setSetting("wa_number", text(formData, "wa_number"));
+  revalidatePath("/", "layout");
+  redirect("/admin/settings?updated=Pengaturan+berhasil+disimpan");
 }
