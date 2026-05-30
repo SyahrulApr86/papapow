@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { isAdmin, loginAdmin, logoutAdmin } from "@/lib/admin-auth";
 import { setSetting } from "@/lib/settings";
+import { uploadImage } from "@/lib/storage";
 
 function text(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
@@ -28,26 +29,22 @@ function nullableText(formData: FormData, key: string) {
   return value || null;
 }
 
-async function fileToBase64(file: File | null, label = "Gambar"): Promise<string | null> {
-  if (!file || !(file instanceof File) || file.size === 0) return null;
+async function uploadFile(file: FormDataEntryValue | null, label: string): Promise<string | null> {
+  if (!(file instanceof File) || file.size === 0) return null;
   if (!file.type.startsWith("image/")) {
     throw new Error(`${label}: hanya file gambar yang diizinkan`);
   }
-  const bytes = await file.arrayBuffer();
-  const base64 = Buffer.from(bytes).toString("base64");
-  return `data:${file.type};base64,${base64}`;
-}
-
-async function uploadFile(file: FormDataEntryValue | null, label: string): Promise<string | null> {
-  if (file instanceof File && file.size > 0) return fileToBase64(file, label);
-  return null;
+  return uploadImage(file, "products");
 }
 
 async function uploadFiles(files: FormDataEntryValue[], label: string): Promise<string[]> {
   const results = await Promise.all(
     files
       .filter((f): f is File => f instanceof File && f.size > 0)
-      .map((f) => fileToBase64(f, label)),
+      .map((f) => {
+        if (!f.type.startsWith("image/")) throw new Error(`${label}: hanya file gambar yang diizinkan`);
+        return uploadImage(f, "products");
+      }),
   );
   return results.filter((u): u is string => u !== null);
 }
@@ -191,7 +188,7 @@ export async function updateBanner(formData: FormData) {
   let imageUrl: string | null = null;
 
   if (file instanceof File && file.size > 0) {
-    imageUrl = await fileToBase64(file, "Gambar Banner");
+    imageUrl = await uploadImage(file, "banners");
   }
   if (!imageUrl) {
     const existing = await db.banner.findUnique({ where: { id }, select: { image_url: true } });

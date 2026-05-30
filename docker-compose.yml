@@ -18,5 +18,41 @@ services:
       timeout: 5s
       retries: 10
 
+  minio:
+    image: minio/minio:latest
+    container_name: papapow-minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: papapow
+      MINIO_ROOT_PASSWORD: papapow123
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web console
+    volumes:
+      - papapow-minio-data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # One-shot: creates bucket + sets public read policy
+  minio-init:
+    image: minio/mc:latest
+    container_name: papapow-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    restart: "no"
+    entrypoint: >
+      /bin/sh -c "
+        mc alias set local http://minio:9000 papapow papapow123 &&
+        mc mb --ignore-existing local/papapow &&
+        mc anonymous set public local/papapow &&
+        echo 'Bucket papapow ready.'
+      "
+
 volumes:
   papapow-postgres-data:
+  papapow-minio-data:

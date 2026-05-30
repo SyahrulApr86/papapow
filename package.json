@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1057.0",
     "@prisma/client": "^5.22.0",
     "@types/pg": "^8.15.6",
+    "dotenv": "^17.4.2",
     "next": "^16.0.3",
     "pg": "^8.16.3",
     "prisma": "^5.22.0",
