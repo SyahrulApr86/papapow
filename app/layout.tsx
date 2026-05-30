@@ -68,7 +68,10 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${inter.variable} ${serif.variable} ${lora.variable}`}>
       <body>
-        {children}
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        <div id="main-content">
+          {children}
+        </div>
         <Toaster />
       </body>
     </html>
