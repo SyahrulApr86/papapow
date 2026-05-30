@@ -101,7 +101,3 @@ export async function deleteImage(urlOrKey: string): Promise<void> {
   );
 }
 
-/** Returns true if a string looks like a base64 data URL */
-export function isBase64DataUrl(value: string): boolean {
-  return value.startsWith("data:");
-}
