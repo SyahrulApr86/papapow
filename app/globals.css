@@ -1536,7 +1536,7 @@ img { display: block; max-width: 100%; }
   padding: clamp(32px, 5vw, 64px) clamp(16px, 5vw, 80px);
 }
 
-.account-shell { margin: 0 auto; max-width: 960px; }
+.account-shell { margin: 0 auto; max-width: 1280px; }
 
 .auth-container { margin: 0 auto; max-width: 480px; }
 .auth-error-center { margin: 0 auto; max-width: 480px; }
@@ -1721,19 +1721,31 @@ img { display: block; max-width: 100%; }
   text-decoration: underline;
 }
 
+/* Logged-in layout: 2-col on desktop */
+.account-logged-in {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 280px 1fr;
+  align-items: start;
+}
+
 .account-welcome {
-  align-items: center;
+  align-items: flex-start;
   background: var(--paper);
   border: 1.5px solid var(--ink);
   border-radius: 0;
   box-shadow: var(--shadow-sm);
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  padding: 20px 28px;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 28px;
 }
-.account-welcome-name  { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+.account-welcome-name  { font-size: 16px; font-weight: 700; margin: 0 0 2px; }
 .account-welcome-email { color: var(--muted); font-size: 13px; margin: 0; }
+
+@media (max-width: 768px) {
+  .account-logged-in { grid-template-columns: 1fr; }
+}
 
 .logout-btn {
   background: none;
@@ -1808,14 +1820,30 @@ img { display: block; max-width: 100%; }
 .wishlist-grid {
   display: grid;
   gap: 0;
+  grid-template-columns: repeat(2, 1fr);
 }
+.wishlist-grid .wishlist-card:nth-child(odd) { border-right: 1px solid var(--line); }
 
 .wishlist-card {
   align-items: center;
   border-bottom: 1px solid var(--line);
   display: flex;
   gap: 14px;
-  padding: 14px 20px;
+  padding: 16px 20px;
+}
+
+/* Cart list in account — larger image + more breathing room */
+.account-orders-card .cart-list-item {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 16px;
+  padding: 16px 24px;
+}
+
+@media (max-width: 640px) {
+  .wishlist-grid { grid-template-columns: 1fr; }
+  .wishlist-grid .wishlist-card:nth-child(odd) { border-right: none; }
 }
 
 .wishlist-card-img {

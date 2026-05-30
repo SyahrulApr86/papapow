@@ -26,8 +26,8 @@ export default async function AccountPage({
             registerAction={registerAction}
           />
         ) : (
-          <>
-            {/* Logged in state */}
+          <div className="account-logged-in">
+            {/* Sidebar — user info */}
             <div className="account-welcome">
               <div className="account-welcome-info">
                 <p className="account-welcome-name">Halo, {user.name}</p>
@@ -38,8 +38,9 @@ export default async function AccountPage({
               </form>
             </div>
 
+            {/* Main — keranjang & wishlist */}
             <OrderTabs defaultTab={tab} />
-          </>
+          </div>
         )}
       </div>
     </main>
