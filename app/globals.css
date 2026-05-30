@@ -739,9 +739,7 @@ img { display: block; max-width: 100%; }
 .breadcrumb-sep { color: var(--muted-2); }
 
 .detail-breadcrumb {
-  margin: 0 auto;
-  max-width: 1280px;
-  padding: 20px clamp(16px, 5vw, 64px) 0;
+  padding: 20px 0 16px;
 }
 
 .all-products-header {
@@ -874,30 +872,37 @@ img { display: block; max-width: 100%; }
   min-height: 100vh;
 }
 
-.detail-layout {
-  display: grid;
-  gap: 48px;
-  grid-template-columns: 1fr 1fr;
+/* Outer wrapper — breadcrumb + card live here */
+.detail-wrapper {
   margin: 0 auto;
   max-width: 1280px;
-  padding: 32px clamp(16px, 5vw, 64px) 64px;
+  padding: 0 clamp(16px, 4vw, 48px) 72px;
+}
+
+/* Big outer card — wraps both columns */
+.detail-layout {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  display: grid;
+  gap: 0;
+  grid-template-columns: 1fr 1fr;
 }
 
 /* ── Images ── */
 .detail-images {
+  align-self: start;
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 40px);
   position: sticky;
   top: 80px;
-  align-self: start;
 }
 
 .detail-main-img {
   aspect-ratio: 3/4;
   background: #f5f5f3;
-  border: 1.5px solid var(--border);
-  max-height: 680px;
   overflow: hidden;
   width: 100%;
 }
@@ -911,8 +916,8 @@ img { display: block; max-width: 100%; }
 
 .detail-thumbs {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 .detail-thumb {
   aspect-ratio: 1;
@@ -922,7 +927,7 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   padding: 0;
   transition: border-color .15s;
-  width: 64px;
+  width: 60px;
 }
 .detail-thumb.active { border-color: var(--ink); }
 .detail-thumb:hover  { border-color: var(--ink); }
@@ -934,12 +939,16 @@ img { display: block; max-width: 100%; }
 
 /* ── Info panel ── */
 .detail-info {
-  background: var(--paper);
-  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: clamp(20px, 3vw, 40px);
+}
+
+/* Sub-block 1: identity (stock + name + price) */
+.detail-info-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 40px);
 }
 
 .detail-stock-row {
@@ -948,7 +957,7 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
 }
 .detail-stock-badge {
-  background: var(--paper);
+  background: transparent;
   border: 1.5px solid var(--ink);
   color: var(--ink);
   font-size: 10px;
@@ -979,7 +988,7 @@ img { display: block; max-width: 100%; }
 
 .detail-name {
   font-family: var(--font-serif);
-  font-size: clamp(22px, 2.5vw, 32px);
+  font-size: clamp(20px, 2.2vw, 30px);
   font-weight: 400;
   line-height: 1.2;
   margin: 0;
@@ -992,13 +1001,24 @@ img { display: block; max-width: 100%; }
 }
 .detail-price .compare-price {
   color: var(--muted);
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: line-through;
 }
 .detail-price .current-price {
   font-size: 22px;
   font-weight: 700;
   letter-spacing: .01em;
+}
+
+/* Sub-block 2: purchase (size + qty + CTAs) */
+.detail-purchase-box {
+  background: #f5f5f3;
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(20px, 3vw, 32px) clamp(24px, 3vw, 40px);
 }
 
 .detail-section {
@@ -1020,11 +1040,6 @@ img { display: block; max-width: 100%; }
   line-height: 1.7;
   margin: 0;
   white-space: pre-line;
-}
-
-.detail-divider {
-  border-top: 1px solid var(--border);
-  margin: 4px 0;
 }
 
 .detail-qty-row {
@@ -1077,6 +1092,15 @@ img { display: block; max-width: 100%; }
   background: var(--ink);
   color: var(--paper);
 }
+
+/* Sub-block 3: info (description, material, shipping, chat) */
+.detail-info-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(24px, 3vw, 40px);
+}
+
 .detail-chat-btn {
   align-items: center;
   border: 1px solid var(--border);
@@ -1086,6 +1110,7 @@ img { display: block; max-width: 100%; }
   gap: 8px;
   justify-content: center;
   letter-spacing: .06em;
+  margin-top: 4px;
   padding: 12px;
   text-decoration: none;
   text-transform: uppercase;
@@ -1093,7 +1118,7 @@ img { display: block; max-width: 100%; }
 }
 .detail-chat-btn:hover { border-color: var(--ink); color: var(--ink); }
 
-/* Shipping info card */
+/* Shipping info */
 .detail-shipping-card {
   border-top: 1px solid var(--border);
   display: flex;
@@ -1179,12 +1204,17 @@ img { display: block; max-width: 100%; }
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .detail-wrapper { padding: 0 0 48px; }
   .detail-layout {
+    border-left: none;
+    border-right: none;
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 16px 16px 48px;
   }
-  .detail-images { position: static; }
+  .detail-images {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    position: static;
+  }
   .detail-related { padding: 32px 16px 48px; }
   .detail-related-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 }

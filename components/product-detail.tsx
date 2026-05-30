@@ -36,6 +36,7 @@ export function ProductDetail({
 
   return (
     <>
+      <div className="detail-wrapper">
       {/* Breadcrumb */}
       <nav className="breadcrumb detail-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a>
@@ -70,6 +71,8 @@ export function ProductDetail({
 
         {/* ── Product info ── */}
         <section className="detail-info">
+          {/* Block 1: identity */}
+          <div className="detail-info-identity">
           <div className="detail-stock-row">
             <span className="detail-stock-badge">Ada Stok</span>
             <button
@@ -102,64 +105,69 @@ export function ProductDetail({
             <strong className="current-price">{formatRupiah(product.price)}</strong>
           </div>
 
-          {product.sizes?.length > 0 && (
-            <div className="detail-section">
-              <p className="detail-section-label">Ukuran</p>
-              <div className="atc-sizes">
-                {product.sizes.map(size => (
-                  <button
-                    key={size}
-                    type="button"
-                    className={`atc-size-btn${selectedSize === size ? " active" : ""}`}
-                    onClick={() => setSelectedSize(size)}
-                  >
-                    {size}
-                  </button>
-                ))}
+          </div>{/* /detail-info-identity */}
+
+          {/* Block 2: purchase */}
+          <div className="detail-purchase-box">
+            {product.sizes?.length > 0 && (
+              <div className="detail-section">
+                <p className="detail-section-label">Ukuran</p>
+                <div className="atc-sizes">
+                  {product.sizes.map(size => (
+                    <button
+                      key={size}
+                      type="button"
+                      className={`atc-size-btn${selectedSize === size ? " active" : ""}`}
+                      onClick={() => setSelectedSize(size)}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
+            )}
+
+            <div className="detail-qty-row">
+              <button
+                type="button"
+                className="atc-qty-btn"
+                onClick={() => setQty(q => Math.max(1, q - 1))}
+                aria-label="Kurangi"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </button>
+              <span className="atc-qty-val">{qty}</span>
+              <button
+                type="button"
+                className="atc-qty-btn"
+                onClick={() => setQty(q => q + 1)}
+                aria-label="Tambah"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </button>
             </div>
-          )}
 
-          <div className="detail-divider" />
-
-          <div className="detail-qty-row">
-            <button
-              type="button"
-              className="atc-qty-btn"
-              onClick={() => setQty(q => Math.max(1, q - 1))}
-              aria-label="Kurangi"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </button>
-            <span className="atc-qty-val">{qty}</span>
-            <button
-              type="button"
-              className="atc-qty-btn"
-              onClick={() => setQty(q => q + 1)}
-              aria-label="Tambah"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </button>
+            <div className="detail-cta-stack">
+              <button className="detail-atc-btn" type="button" onClick={() => setModalOpen(true)}>
+                Tambah Ke Keranjang
+              </button>
+              <a
+                className="detail-buy-now-btn"
+                href={`https://wa.me/${waNumber}?text=${encodeURIComponent(`Halo, saya mau beli ${product.name}${selectedSize ? ` ukuran ${selectedSize}` : ""}. Apakah masih tersedia?`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Beli Sekarang
+              </a>
+            </div>
           </div>
 
-          <div className="detail-cta-stack">
-            <button className="detail-atc-btn" type="button" onClick={() => setModalOpen(true)}>
-              Tambah Ke Keranjang
-            </button>
-            <a
-              className="detail-buy-now-btn"
-              href={`https://wa.me/${waNumber}?text=${encodeURIComponent(`Halo, saya mau beli ${product.name}${selectedSize ? ` ukuran ${selectedSize}` : ""}. Apakah masih tersedia?`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Beli Sekarang
-            </a>
-          </div>
-
+          {/* Block 3: info body */}
+          <div className="detail-info-body">
           {product.description && (
             <div className="detail-section">
               <p className="detail-section-label">Deskripsi :</p>
@@ -201,8 +209,10 @@ export function ProductDetail({
             </svg>
             Kirim Pesan ke PAPAPOW?
           </a>
+          </div>{/* /detail-info-body */}
         </section>
-      </div>
+      </div>{/* /detail-layout */}
+      </div>{/* /detail-wrapper */}
 
       {/* ── Related products ── */}
       {related.length > 0 && (
