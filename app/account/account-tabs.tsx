@@ -3,19 +3,17 @@
 import { useState } from "react";
 
 export function AccountTabs({
-  children,
+  loginForm,
+  registerForm,
   defaultTab = "register",
 }: {
-  children: React.ReactNode;
+  loginForm: React.ReactNode;
+  registerForm: React.ReactNode;
   defaultTab?: string;
 }) {
   const [active, setActive] = useState<"login" | "register">(
     defaultTab === "login" ? "login" : "register",
   );
-
-  const forms = Array.isArray(children) ? children : [children];
-  const loginForm = forms.find((c: any) => c?.props?.["data-tab"] === "login");
-  const registerForm = forms.find((c: any) => c?.props?.["data-tab"] === "register");
 
   return (
     <div className="auth-tabs-wrapper">

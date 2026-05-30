@@ -40,45 +40,47 @@ export default async function AccountPage({
 
             {/* Auth forms */}
             <div className="auth-container" id="auth-forms">
-              <AccountTabs defaultTab={tab === "login" ? "login" : "register"}>
-                {/* Login form */}
-                <form action={loginAction} className="auth-form" data-tab="login">
-                  <label>
-                    <span>Email</span>
-                    <input type="email" name="email" placeholder="email@kamu.com" required />
-                  </label>
-                  <label>
-                    <span>Password</span>
-                    <input type="password" name="password" placeholder="••••••••" required />
-                  </label>
-                  <button type="submit" className="auth-submit">Masuk</button>
-                  <p className="auth-hint">
-                    Belum punya akun?{" "}
-                    <a href="#register" className="auth-link">Daftar sekarang</a>
-                  </p>
-                </form>
-
-                {/* Register form */}
-                <form action={registerAction} className="auth-form" data-tab="register">
-                  <label>
-                    <span>Nama</span>
-                    <input type="text" name="name" placeholder="Nama lengkap kamu" required />
-                  </label>
-                  <label>
-                    <span>Email</span>
-                    <input type="email" name="email" placeholder="email@kamu.com" required />
-                  </label>
-                  <label>
-                    <span>Password</span>
-                    <input type="password" name="password" placeholder="Min. 6 karakter" required minLength={6} />
-                  </label>
-                  <button type="submit" className="auth-submit">Buat Akun</button>
-                  <p className="auth-hint">
-                    Sudah punya akun?{" "}
-                    <a href="#login" className="auth-link">Masuk</a>
-                  </p>
-                </form>
-              </AccountTabs>
+              <AccountTabs
+                defaultTab={tab === "login" ? "login" : "register"}
+                loginForm={
+                  <form action={loginAction} className="auth-form">
+                    <label>
+                      <span>Email</span>
+                      <input type="email" name="email" placeholder="email@kamu.com" required />
+                    </label>
+                    <label>
+                      <span>Password</span>
+                      <input type="password" name="password" placeholder="••••••••" required />
+                    </label>
+                    <button type="submit" className="auth-submit">Masuk</button>
+                    <p className="auth-hint">
+                      Belum punya akun?{" "}
+                      <a href="#register" className="auth-link">Daftar sekarang</a>
+                    </p>
+                  </form>
+                }
+                registerForm={
+                  <form action={registerAction} className="auth-form">
+                    <label>
+                      <span>Nama</span>
+                      <input type="text" name="name" placeholder="Nama lengkap kamu" required />
+                    </label>
+                    <label>
+                      <span>Email</span>
+                      <input type="email" name="email" placeholder="email@kamu.com" required />
+                    </label>
+                    <label>
+                      <span>Password</span>
+                      <input type="password" name="password" placeholder="Min. 6 karakter" required minLength={6} />
+                    </label>
+                    <button type="submit" className="auth-submit">Buat Akun</button>
+                    <p className="auth-hint">
+                      Sudah punya akun?{" "}
+                      <a href="#login" className="auth-link">Masuk</a>
+                    </p>
+                  </form>
+                }
+              />
             </div>
           </>
         ) : (
