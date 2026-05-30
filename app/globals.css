@@ -2325,13 +2325,13 @@ textarea {
 .detail-section { margin-bottom: 20px; }
 .detail-section-label {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: .08em;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
-.detail-section-text { color: var(--muted); font-size: 14px; line-height: 1.75; margin: 0; white-space: pre-line; }
+.detail-section-text { color: var(--muted); font-size: 1rem; line-height: 1.75; margin: 0; white-space: pre-line; }
 
 .detail-qty-row {
   align-items: center;
@@ -2352,7 +2352,7 @@ textarea {
   border-radius: 0;
   color: #fff;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   height: 54px;
   letter-spacing: .1em;
@@ -2375,7 +2375,7 @@ textarea {
   color: var(--ink);
   cursor: pointer;
   display: flex;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   height: 54px;
   justify-content: center;
@@ -2399,16 +2399,16 @@ textarea {
   padding: 16px 18px;
 }
 .detail-shipping-title {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: .08em;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
 .detail-shipping-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
-.detail-shipping-key { color: var(--muted); font-size: 13px; }
-.detail-shipping-val { color: var(--ink); font-size: 13px; font-weight: 600; }
-.detail-shipping-note { color: var(--muted); font-size: 12px; font-style: italic; }
+.detail-shipping-key { color: var(--muted); font-size: 0.9rem; }
+.detail-shipping-val { color: var(--ink); font-size: 0.9rem; font-weight: 600; }
+.detail-shipping-note { color: var(--muted); font-size: 0.85rem; font-style: italic; }
 
 .detail-chat-btn {
   align-items: center;
@@ -2416,7 +2416,7 @@ textarea {
   border-radius: 0;
   color: var(--ink);
   display: flex;
-  font-size: 13px;
+  font-size: 0.9rem;
   font-weight: 600;
   gap: 8px;
   height: 46px;
