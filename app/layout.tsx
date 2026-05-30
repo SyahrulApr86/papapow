@@ -25,9 +25,39 @@ const lora = Lora({
   weight: ["400", "600"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://papapow.vercel.app";
+
 export const metadata: Metadata = {
-  title: "PAPAPOW",
-  description: "Monochrome goods for daily motion.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "PAPAPOW — Monochrome Goods for Daily Motion",
+    template: "%s | PAPAPOW",
+  },
+  description: "PAPAPOW — koleksi fashion monochrome untuk gerakan sehari-hari. Hoodie, tee, polo, dan aksesori dari Jakarta.",
+  keywords: ["PAPAPOW", "fashion", "monochrome", "hoodie", "streetwear", "baju", "Jakarta", "clothing"],
+  authors: [{ name: "PAPAPOW" }],
+  creator: "PAPAPOW",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: siteUrl,
+    siteName: "PAPAPOW",
+    title: "PAPAPOW — Monochrome Goods for Daily Motion",
+    description: "Koleksi fashion monochrome untuk gerakan sehari-hari. Hoodie, tee, polo, dan aksesori dari Jakarta.",
+    images: [{ url: "/images/logo-white.jpg", width: 1200, height: 630, alt: "PAPAPOW" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PAPAPOW — Monochrome Goods for Daily Motion",
+    description: "Koleksi fashion monochrome untuk gerakan sehari-hari.",
+    images: ["/images/logo-white.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+  alternates: { canonical: siteUrl },
 };
 
 export default function RootLayout({

@@ -15,8 +15,23 @@ export default async function Home() {
   const hero = banners.find((banner) => banner.placement === "hero");
   const bottom = banners.find((banner) => banner.placement === "bottom");
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://papapow.vercel.app";
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PAPAPOW",
+    url: siteUrl,
+    logo: `${siteUrl}/images/logo-black.png`,
+    description: "Monochrome goods for daily motion. Fashion catalog dari Jakarta.",
+    address: { "@type": "PostalAddress", addressLocality: "Jakarta", addressCountry: "ID" },
+  };
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
       <SiteHeader products={products} user={user} />
 
       <section className="hero" style={{ backgroundImage: `url(${hero?.image_url})` }}>
